@@ -6,6 +6,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 public class Intro extends Application {
+	
 	public static void main(String[] args) {
 		launch();
 	}

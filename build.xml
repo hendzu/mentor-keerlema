@@ -12,11 +12,11 @@
             Mentor keerlema POS
     </description>
 	
-	<property name="src" location="${basedir}/src"/>
-	<property name="build" location="${basedir}/build"/>
-	<property name="build.resources" location="${build}/resources"/>
-	<property name="build.classes" location="${build}/classes"/>
-	<property name="dist" location="${build}/jar"/>
+	<property name="src" value="${basedir}/src"/>
+	<property name="build" value="${basedir}/build"/>
+	<property name="build.resources" value="${build}/resources"/>
+	<property name="build.classes" value="${build}/classes"/>
+	<property name="dist" value="${build}/jar"/>
 	<!--<property name="src" location="${basedir}/src"/>-->
 	
 	<path id="compile.classpath">
@@ -54,14 +54,41 @@
     	<java classname="ee.ut.math.tvt.mentor_keerlema.Intro" classpathref="test.classpath" fork="yes"/>
     </target>
 	
+
+    <target name="revision">
+		<propertyfile file="resources/version.properties"/>
+    	<buildnumber/>
+    	<echo message="${major}.${build.number}"/>
+    </target>
+	
+    <target name="major">
+            <propertyfile file="resources/version.properties">
+            <entry key="build.revision.number"
+            value="1" default="1" type="int" operation="+" pattern="0"/>
+            </propertyfile>
+    </target>
+
+
+	
 	<target name="clean" description="kustutab asju">
 		<delete dir="${build}"/>
 		<delete dir="${build.classes}"/>
 		<delete dir="${build.resources}"/>
+		<delete dir="${dist}"/>
 	</target>
 	
 	<target name="dist" depends="build" description="distribution">
 		<mkdir dir="${dist}"/>
-		<jar jarfile="${dist}/POS.jar" basedir="${build}"/>
+		<jar destfile="${dist}/POS.jar" basedir="${build}/classes">
+			<manifest>
+				<attribute name="Main-Class" value="ee.ut.math.tvt.mentor_keerlema.Intro"/>
+			</manifest>
+		</jar>
 	</target>
+	
+
+    <target name="jrun">
+    	<java classname="ee.ut.math.tvt.mentor_keerlema.Intro" classpath="${dist}/POS.jar"/>
+    </target>
+
 </project>
