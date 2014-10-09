@@ -55,5 +55,10 @@
     <target name="run" depends="build" description="Jookseb kurja hundi eest">
     	<java classname="ee.ut.math.tvt.mentor_keerlema.Intro" classpathref="test.classpath" fork="yes"/>
     </target>
-
+	
+	<target name="clean" description="kustutab asju">
+		<delete dir="${build}"/>
+		<delete dir="${build.classes}"/>
+		<delete dir="${build.resources}"/>
+	</target>
 </project>
