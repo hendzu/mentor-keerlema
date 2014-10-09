@@ -35,7 +35,6 @@ public class IntroUI{
 		Text tleader = new Text("Team leader: Hendrik Rasmus Elmet");
 		Text tleaderemail = new Text("Team leader email: ");
 		Text tmembers = new Text("Team memers: Marko Täht, Rene Lehtma");
-		Text logo = new Text("Team logo:");
 		Image Logo = new Image("logo.jpg");
 		ImageView iv = new ImageView();
 		iv.setImage(Logo);
