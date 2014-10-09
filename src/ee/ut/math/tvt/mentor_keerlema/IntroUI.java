@@ -24,21 +24,29 @@ public class IntroUI{
 		root.setPadding(new Insets(25,25,25,25));
 		
 		String Version = "version.properties";
+		String Application = "application.properties";
 		Properties prop = null;
 		try {
 			prop = getProperties(Version);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		Text version = new Text("Software version: " + prop.getProperty("build.number"));
 		
-		Text tname = new Text("Team name: Mentor Keerlema");
-		Text tleader = new Text("Team leader: Hendrik Rasmus Elmet");
-		Text tleaderemail = new Text("Team leader email: ");
-		Text tmembers = new Text("Team memers: Marko Täht, Rene Lehtma");
-		Image Logo = new Image("logo.jpg");
+		try {
+			prop = getProperties(Application);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Text tname = new Text("Team name: "+ prop.getProperty("team.name"));
+		Text tleader = new Text("Team leader: "+ prop.getProperty("team.leader"));
+		Text tleaderemail = new Text("Team leader email: " + prop.getProperty("team.leader.email"));
+		Text tmembers = new Text("Team memers: " + prop.getProperty("team.members"));
+		Image Logo = new Image(prop.getProperty("team.logo"));
 		ImageView iv = new ImageView();
 		iv.setImage(Logo);
-		Text version = new Text("Software version: " + prop.getProperty("build.number"));
 		root.add(tname, 0,0);
 		root.add(tleader, 0, 1);
 		root.add(tleaderemail, 0, 2);
