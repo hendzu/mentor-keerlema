@@ -7,16 +7,18 @@
                    
      HendrikRasmus                                                                
      ====================================================================== -->
-<project name="POS" default="run" basedir=".">
+<project name="POS" default="jrun" basedir=".">
     <description>
             Mentor keerlema POS
     </description>
 	
+	<property name="team.name" value="Mentor Keerlema"/> <!--selle saaks ilmselt properties failist lugeda-->
 	<property name="src" location="${basedir}/src"/>
-	<property name="build" location="${basedir}/build"/>
-	<property name="build.resources" location="${build}/resources"/>
-	<property name="build.classes" location="${build}/classes"/>
-	<property name="dist" location="${build}/jar"/>
+	<property name="build.dir" location="${basedir}/build"/>
+	<property name="build.resources.dir" location="${build.dir}/resources"/>
+	<property name="build.classes.dir" location="${build.dir}/classes"/>
+	<property name="dist.dir" location="${build.dir}/jar"/>
+	<property name="main-class" value="ee.ut.math.tvt.mentor_keerlema.Intro"/>
 	<!--<property name="src" location="${basedir}/src"/>-->
 	
 	<path id="compile.classpath">
@@ -24,21 +26,29 @@
 			<include name="*.jar"/>
 		</fileset>
 	</path> 
+	
 	<path id="test.classpath">
-		<pathelement location="${build.classes}"/>
+		<pathelement location="${build.classes.dir}"/>
 			<fileset dir="lib">
 				<include name="*.jar"/>
 			</fileset>
 		<dirset dir="resources" />
-		<pathelement path="resoureces" />
-		</path>
+		<pathelement path="resources" />
+	</path>
+	
+	<target name="clean" description="kustutab asju">
+			<delete dir="${build.dir}"/>
+			<delete dir="${build.classes.dir}"/>
+			<delete dir="${build.resources.dir}"/>
+	</target>
+
 	
     <target name="build" description="lol">
-        <mkdir dir="${build}"/>
-    	<mkdir dir="${build.classes}"/>
-    	<mkdir dir="${build.resources}"/>
+        <mkdir dir="${build.dir}"/>
+    	<mkdir dir="${build.classes.dir}"/>
+    	<mkdir dir="${build.resources.dir}"/>
     	<javac srcdir="${src}"
-         destdir="${build.classes}"
+         destdir="${build.classes.dir}"
     		debug="true"
     		debuglevel="lines,vars,source"
     		encoding="utf-8"
@@ -47,21 +57,32 @@
     		source="1.8"
     		includeantruntime="false">
          <classpath refid="compile.classpath"/>
-	</javac>
-    </target>
-
-    <target name="run" depends="build" description="Jookseb kurja hundi eest">
-    	<java classname="ee.ut.math.tvt.mentor_keerlema.Intro" classpathref="test.classpath" fork="yes"/>
+		</javac>
+    	<copy todir="${build.resources.dir}">
+    	    <fileset dir="./resources"/>
+    	</copy>
     </target>
 	
-	<target name="clean" description="kustutab asju">
-		<delete dir="${build}"/>
-		<delete dir="${build.classes}"/>
-		<delete dir="${build.resources}"/>
+	<target name="dist" depends="build" description="distribution" >
+		<mkdir dir="${dist.dir}"/>
+		<jar destfile="${dist.dir}/${team.name}.jar">
+			<fileset dir="${build.classes.dir}"/>
+			<fileset dir="${build.resources.dir}/"/>
+			<manifest>
+				<attribute name="Main-class" value="${main-class}"/>
+			</manifest>
+		</jar>
+		
 	</target>
 	
-	<target name="dist" depends="build" description="distribution">
-		<mkdir dir="${dist}"/>
-		<jar jarfile="${dist}/POS.jar" basedir="${build}"/>
+	<target name="jrun" depends="dist" description="distribution">
+		 <java jar="${dist.dir}/${team.name}.jar" fork="true"/>
 	</target>
+	
+	<target name="run" depends="dist" description="Jookseb kurja hundi eest">
+	    <java classname="ee.ut.math.tvt.mentor_keerlema.Intro" classpathref="test.classpath" fork="yes"/>
+	</target>
+	
+	<target name="main" depends="clean, run" description="distribution"/>
+	
 </project>
