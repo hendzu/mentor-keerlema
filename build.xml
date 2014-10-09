@@ -19,6 +19,7 @@
 	<property name="build.classes.dir" location="${build.dir}/classes"/>
 	<property name="dist.dir" location="${build.dir}/jar"/>
 	<property name="main-class" value="ee.ut.math.tvt.mentor_keerlema.Intro"/>
+
 	<!--<property name="src" location="${basedir}/src"/>-->
 	
 	<path id="compile.classpath">
@@ -37,9 +38,10 @@
 	</path>
 	
 	<target name="clean" description="kustutab asju">
-			<delete dir="${build.dir}"/>
-			<delete dir="${build.classes.dir}"/>
-			<delete dir="${build.resources.dir}"/>
+		<delete dir="${build.dir}"/>
+		<delete dir="${build.classes.dir}"/>
+		<delete dir="${build.resources.dir}"/>
+		<delete dir="${dist.dir}"/>
 	</target>
 
 	
@@ -72,8 +74,21 @@
 				<attribute name="Main-class" value="${main-class}"/>
 			</manifest>
 		</jar>
-		
-	</target>
+	</target>	
+
+    <target name="revision">
+		<propertyfile file="resources/version.properties"/>
+    	<buildnumber/>
+    	<echo message="${major}.${build.number}"/>
+    </target>
+	
+    <target name="major">
+            <propertyfile file="resources/version.properties">
+            <entry key="build.revision.number"
+            value="1" default="1" type="int" operation="+" pattern="0"/>
+            </propertyfile>
+    </target>
+
 	
 	<target name="jrun" depends="dist" description="distribution">
 		 <java jar="${dist.dir}/${team.name}.jar" fork="true"/>
