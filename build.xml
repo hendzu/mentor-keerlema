@@ -16,6 +16,7 @@
 	<property name="build" location="${basedir}/build"/>
 	<property name="build.resources" location="${build}/resources"/>
 	<property name="build.classes" location="${build}/classes"/>
+	<property name="dist" location="${build}/jar"/>
 	<!--<property name="src" location="${basedir}/src"/>-->
 	
 	<path id="compile.classpath">
@@ -49,9 +50,6 @@
 	</javac>
     </target>
 
-    <!-- - - - - - - - - - - - - - - - - - 
-          target: depends                      
-         - - - - - - - - - - - - - - - - - -->
     <target name="run" depends="build" description="Jookseb kurja hundi eest">
     	<java classname="ee.ut.math.tvt.mentor_keerlema.Intro" classpathref="test.classpath" fork="yes"/>
     </target>
@@ -60,5 +58,10 @@
 		<delete dir="${build}"/>
 		<delete dir="${build.classes}"/>
 		<delete dir="${build.resources}"/>
+	</target>
+	
+	<target name="dist" depends="build" description="distribution">
+		<mkdir dir="${dist}"/>
+		<jar jarfile="${dist}/POS.jar" basedir="${build}"/>
 	</target>
 </project>
