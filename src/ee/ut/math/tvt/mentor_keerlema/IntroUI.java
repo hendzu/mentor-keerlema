@@ -43,7 +43,6 @@ public class IntroUI{
 		root.add(tleader, 0, 1);
 		root.add(tleaderemail, 0, 2);
 		root.add(tmembers, 0, 3);
-		root.add(logo, 0, 4);
 		root.add(iv,1,4);
 		root.add(version, 0, 5);
 		return root;
