@@ -21,6 +21,8 @@ public class IntroUI{
 		GridPane root = new GridPane();
 		root.setHgap(10);
 		root.setVgap(10);
+		
+		
 		root.setPadding(new Insets(25,25,25,25));
 		
 		String Version = "version.properties";
