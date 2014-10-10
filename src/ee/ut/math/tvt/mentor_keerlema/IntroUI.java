@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import org.apache.log4j.Logger;
+
 import javafx.geometry.Insets;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -13,7 +15,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
 public class IntroUI{
-	
+	private static final Logger log = Logger.getLogger(IntroUI.class);
 	public IntroUI(){
 	}
 
@@ -31,7 +33,7 @@ public class IntroUI{
 		try {
 			prop = getProperties(Version);
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.error(e.getMessage());
 		}
 		Text version = new Text("Software version: " + prop.getProperty("build.number"));
 		
@@ -39,7 +41,7 @@ public class IntroUI{
 			prop = getProperties(Application);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error(e.getMessage());
 		}
 		
 		Text tname = new Text("Team name: "+ prop.getProperty("team.name"));
@@ -55,6 +57,7 @@ public class IntroUI{
 		root.add(tmembers, 0, 3);
 		root.add(iv,1,4);
 		root.add(version, 0, 5);
+		log.info("IntroUI created");
 		return root;
 	}
 	
@@ -65,7 +68,8 @@ public class IntroUI{
 		if(input == null){
 			throw new FileNotFoundException("property file '" + name + "' not found!");
 		}
-		prop.load(input);		
+		prop.load(input);
+		log.info(name + " loaded");
 		return prop;
 	}
 }
