@@ -65,7 +65,7 @@
     	</copy>
     </target>
 	
-	<target name="dist" depends="build" description="distribution" >
+	<target name="dist" depends="build, revision" description="distribution" >
 		<mkdir dir="${dist.dir}"/>
 		<jar destfile="${dist.dir}/${team.name}.jar">
 			<fileset dir="${build.classes.dir}"/>
@@ -75,14 +75,8 @@
 			</manifest>
 		</jar>
 	</target>	
-
-    <target name="revision">
-		<propertyfile file="resources/version.properties"/>
-    	<buildnumber/>
-    	<echo message="${major}.${build.number}"/>
-    </target>
 	
-    <target name="major">
+    <target name="revision">
             <propertyfile file="resources/version.properties">
             <entry key="build.revision.number"
             value="1" default="1" type="int" operation="+" pattern="0"/>
