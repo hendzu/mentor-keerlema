@@ -11,14 +11,14 @@
     <description>
             Mentor keerlema POS
     </description>
-	<propertyfile file="resources/application.properties"/>
-	<property name="team.name" value="${team.name}"/> 
+	
 	<property name="src" location="${basedir}/src"/>
 	<property name="build.dir" location="${basedir}/build"/>
-	<property name="build.resources.dir" location="${build.dir}/resources"/>
 	<property name="build.classes.dir" location="${build.dir}/classes"/>
+	<property name="build.resources.dir" location="${build.dir}/resources"/>
 	<property name="dist.dir" location="${build.dir}/jar"/>
 	<property name="main-class" value="ee.ut.math.tvt.mentor_keerlema.Intro"/>
+	<property file="./resources/application.properties"/>
 
 	<!--<property name="src" location="${basedir}/src"/>-->
 	
@@ -45,7 +45,7 @@
 	</target>
 
 	
-    <target name="build" description="lol">
+    <target name="build" depends="clean" description="lol">
         <mkdir dir="${build.dir}"/>
     	<mkdir dir="${build.classes.dir}"/>
     	<mkdir dir="${build.resources.dir}"/>
@@ -70,6 +70,7 @@
 		<jar destfile="${dist.dir}/${team.name}.jar">
 			<fileset dir="${build.classes.dir}"/>
 			<fileset dir="${build.resources.dir}/"/>
+			<zipgroupfileset dir="./lib" includes="**/*.jar" />
 			<manifest>
 				<attribute name="Main-class" value="${main-class}"/>
 			</manifest>
@@ -93,10 +94,8 @@
 		 <java jar="${dist.dir}/${team.name}.jar" fork="true"/>
 	</target>
 	
-	<target name="run" depends="dist" description="Jookseb kurja hundi eest">
+	<target name="run" depends="build" description="Jookseb kurja hundi eest">
 	    <java classname="ee.ut.math.tvt.mentor_keerlema.Intro" classpathref="test.classpath" fork="yes"/>
 	</target>
-	
-	<target name="main" depends="clean, run" description="distribution"/>
 	
 </project>
