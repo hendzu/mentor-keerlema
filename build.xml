@@ -11,8 +11,8 @@
     <description>
             Mentor keerlema POS
     </description>
-	
-	<property name="team.name" value="Mentor Keerlema"/> <!--selle saaks ilmselt properties failist lugeda-->
+	<propertyfile file="resources/application.properties"/>
+	<property name="team.name" value="${team.name}"/> 
 	<property name="src" location="${basedir}/src"/>
 	<property name="build.dir" location="${basedir}/build"/>
 	<property name="build.resources.dir" location="${build.dir}/resources"/>
