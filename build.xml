@@ -11,8 +11,7 @@
     <description>
             Mentor keerlema POS
     </description>
-	<propertyfile file="resources/application.properties"/>
-	<property name="team.name" value="${team.name}"/> 
+	<property file="resources/application.properties"/>
 	<property name="src" location="${basedir}/src"/>
 	<property name="build.dir" location="${basedir}/build"/>
 	<property name="build.resources.dir" location="${build.dir}/resources"/>
@@ -20,7 +19,7 @@
 	<property name="dist.dir" location="${build.dir}/jar"/>
 	<property name="main-class" value="ee.ut.math.tvt.mentor_keerlema.Intro"/>
 
-	<!--<property name="src" location="${basedir}/src"/>-->
+	
 	
 	<path id="compile.classpath">
 		<fileset dir="./lib">
