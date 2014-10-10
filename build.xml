@@ -65,7 +65,7 @@
     	</copy>
     </target>
 	
-	<target name="dist" depends="build, revision" description="distribution" >
+	<target name="dist" depends="build" description="distribution" >
 		<mkdir dir="${dist.dir}"/>
 		<jar destfile="${dist.dir}/${team.name}.jar">
 			<fileset dir="${build.classes.dir}"/>
@@ -74,6 +74,7 @@
 				<attribute name="Main-class" value="${main-class}"/>
 			</manifest>
 		</jar>
+		<antcall target="revision"/>
 	</target>	
 	
     <target name="revision">
@@ -81,6 +82,10 @@
             <entry key="build.revision.number"
             value="1" default="1" type="int" operation="+" pattern="0"/>
             </propertyfile>
+    	<property file="resources/version.properties"/>
+    	<propertyfile file="resources/version.properties">
+    		<entry key="build.number" value="${build.major.number}.${build.minor.number}.${build.revision.number}"/>
+    	</propertyfile>
     </target>
 
 	
