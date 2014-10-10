@@ -19,8 +19,6 @@
 	<property name="dist.dir" location="${build.dir}/jar"/>
 	<property name="main-class" value="ee.ut.math.tvt.mentor_keerlema.Intro"/>
 	<property file="./resources/application.properties"/>
-
-	<!--<property name="src" location="${basedir}/src"/>-->
 	
 	<path id="compile.classpath">
 		<fileset dir="./lib">
