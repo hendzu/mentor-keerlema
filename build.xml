@@ -125,7 +125,7 @@
 		</git>
 		<git command="push">
 			<args>
-				<arg value="https://{${username}:${password}}@github.com/hendzu/mentor-keerlema.git"/>
+				<arg value="https://${username}:${password}@github.com/hendzu/mentor-keerlema.git"/>
 			</args>
 			<args2>
 				<arg value="master:master"/>
