@@ -123,7 +123,7 @@
 		</git>
 		<git command="push">
 			<args>
-				<arg value="https://${username}@github.com/hendzu/mentor-keerlema.git origin/master"/>
+				<arg value="origin/master https://${username}@github.com/hendzu/mentor-keerlema.git"/>
 			</args>
 		</git>
 		
