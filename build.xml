@@ -123,7 +123,7 @@
 		</git>
 		<git command="push">
 			<args>
-				<arg value="origin master"/>
+				<arg value="https://${username}:${password}@github.com/hendzu/mentor-keerlema.git/master"/>
 			</args>
 		</git>
 		
