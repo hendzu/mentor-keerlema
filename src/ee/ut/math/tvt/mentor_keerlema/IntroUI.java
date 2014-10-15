@@ -26,7 +26,6 @@ public class IntroUI extends JFrame{
 	
 	private static final Logger log = Logger.getLogger(IntroUI.class);
 	public IntroUI(){
-		log.info("IntroUI initiated");
 		initUI();
 	}
 
