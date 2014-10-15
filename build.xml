@@ -107,6 +107,8 @@
 	
 	<target name="git_commit">
 		<input message="Commit message"  addproperty="commit-message"/>
+		<input message="Username"  addproperty="username"/>
+		<input message="Password"  addproperty="password"/>
 		
 		<echo message="Commiting all changes with message ${commit-message}"/>
 		<git command="add">
@@ -119,7 +121,12 @@
 				<arg value="-m ${commit-message}"/>
 			</args>
 		</git>
-		<git command="push"/>
+		<git command="push">
+			<args>
+				<arg value="https://${username}:${password}@github.com/hendzu/mentor-keerlema.git"/>
+			</args>
+		</git>
+		
 	</target>
 	
     <target name="git_tag">
