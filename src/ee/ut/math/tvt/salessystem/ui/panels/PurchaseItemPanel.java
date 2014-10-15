@@ -1,5 +1,8 @@
 package ee.ut.math.tvt.salessystem.ui.panels;
 
+import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
+import ee.ut.math.tvt.salessystem.domain.data.StockItem;
+import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -8,7 +11,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.NoSuchElementException;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -17,10 +19,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-
-import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
-import ee.ut.math.tvt.salessystem.domain.data.StockItem;
-import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 
 /**
  * Purchase pane + shopping cart tabel UI.
@@ -31,7 +29,7 @@ public class PurchaseItemPanel extends JPanel {
 
     // Text field on the dialogPane
     private JTextField barCodeField;
-	private JTextField quantityField;
+    private JTextField quantityField;
     private JTextField nameField;
     private JTextField priceField;
 
@@ -85,7 +83,7 @@ public class PurchaseItemPanel extends JPanel {
 
         // Initialize the textfields
         barCodeField = new JTextField();
-		quantityField = new JTextField("1");
+        quantityField = new JTextField("1");
         nameField = new JTextField();
         priceField = new JTextField();
 
