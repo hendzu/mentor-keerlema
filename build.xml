@@ -128,7 +128,7 @@
 				<arg value="https://${username}:${password}@github.com/hendzu/mentor-keerlema.git"/>
 			</args>
 			<args2>
-				<arg value="master:master"/>
+				<arg value="master:origin/master"/>
 			</args2>
 		</git>
 		
