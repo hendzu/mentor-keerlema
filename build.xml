@@ -83,11 +83,11 @@
 	</target>
 
 	<target name="revision">
-		<propertyfile file="resources/version.properties">
+		<propertyfile file="${basedir}/resources/version.properties">
 			<entry key="build.revision.number" value="1" default="1" type="int" operation="+" pattern="0" />
 		</propertyfile>
-		<property file="resources/version.properties" />
-		<propertyfile file="resources/version.properties">
+		<property file="${basedir}/resources/version.properties" />
+		<propertyfile file="${basedir}/resources/version.properties">
 			<entry key="build.number" value="${build.major.number}.${build.minor.number}.${build.revision.number}" />
 		</propertyfile>
 	</target>
