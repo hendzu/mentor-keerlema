@@ -7,7 +7,7 @@
                    
      HendrikRasmus                                                                
      ====================================================================== -->
-<project name="POS" default="jrun" basedir=".">
+<project name="POS" default="run" basedir=".">
 	<description>
             Mentor keerlema POS
     </description>
@@ -98,7 +98,11 @@
 	</target>
 
 	<target name="run" depends="build" description="Jookseb kurja hundi eest">
-		<java classname="ee.ut.math.tvt.mentor_keerlema.Intro" classpathref="test.classpath" fork="yes" />
+		<java classname="ee.ut.math.tvt.mentor_keerlema.Intro" 
+			classpathref="test.classpath" fork="yes" >
+		<jvmarg value="-Xdebug" />
+		<jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044" />
+		</java>
 	</target>
 
 	<target name="runc" depends="build" description="Run the application (console)">
