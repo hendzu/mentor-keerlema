@@ -1,4 +1,4 @@
-package ee.ut.math.tvt.salessystem.ui;
+ package ee.ut.math.tvt.salessystem.ui;
 
 import com.jgoodies.looks.windows.WindowsLookAndFeel;
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;

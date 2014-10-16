@@ -3,6 +3,7 @@ package ee.ut.math.tvt.salessystem.ui.panels;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -10,9 +11,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -23,7 +29,7 @@ import javax.swing.JTextField;
 /**
  * Purchase pane + shopping cart tabel UI.
  */
-public class PurchaseItemPanel extends JPanel {
+public class PurchaseItemPanel extends JPanel implements ItemListener{
 
     private static final long serialVersionUID = 1L;
 
@@ -34,7 +40,8 @@ public class PurchaseItemPanel extends JPanel {
     private JTextField priceField;
 
     private JButton addItemButton;
-
+    
+    private JComboBox<StockItem> items;
     // Warehouse model
     private SalesSystemModel model;
 
@@ -78,30 +85,37 @@ public class PurchaseItemPanel extends JPanel {
 
         // Create the panel
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(5, 2));
+        panel.setLayout(new GridLayout(6, 2));
         panel.setBorder(BorderFactory.createTitledBorder("Product"));
-
+        StockItem[] stock = new StockItem[model.getWarehouseTableModel().getTableRows().size()+1];
+        for(int i = 1; i<model.getWarehouseTableModel().getTableRows().size()+1;i++){
+        	stock[i]=model.getWarehouseTableModel().getItemById(i);
+        }
+        items = new JComboBox<StockItem>(stock);
+        items.addItemListener(this);
         // Initialize the textfields
+        Object product = items.getSelectedItem();
         barCodeField = new JTextField();
         quantityField = new JTextField("1");
         nameField = new JTextField();
         priceField = new JTextField();
 
         // Fill the dialog fields if the bar code text field loses focus
-        barCodeField.addFocusListener(new FocusListener() {
+/*        barCodeField.addFocusListener(new FocusListener() {
             public void focusGained(FocusEvent e) {
             }
 
             public void focusLost(FocusEvent e) {
                 fillDialogFields();
             }
-        });
+        });*/
 
         nameField.setEditable(false);
         priceField.setEditable(false);
 
         // == Add components to the panel
-
+        panel.add(new JLabel("Name:"));
+        panel.add(items);
         // - bar code
         panel.add(new JLabel("Bar code:"));
         panel.add(barCodeField);
@@ -111,13 +125,13 @@ public class PurchaseItemPanel extends JPanel {
         panel.add(quantityField);
 
         // - name
-        panel.add(new JLabel("Name:"));
-        panel.add(nameField);
+/*        panel.add(new JLabel("Name:"));
+        panel.add(nameField);*/
 
         // - price
         panel.add(new JLabel("Price:"));
         panel.add(priceField);
-
+        
         // Create and add the button
         addItemButton = new JButton("Add to cart");
         addItemButton.addActionListener(new ActionListener() {
@@ -130,7 +144,22 @@ public class PurchaseItemPanel extends JPanel {
 
         return panel;
     }
-
+    
+    @Override
+    public void itemStateChanged(ItemEvent e) {
+        
+        if (e.getStateChange() == ItemEvent.SELECTED) {
+        	Object product = e.getItem();
+        	if(((StockItem)product).getName() == null){
+        		reset();
+        	}
+        	else{
+        		barCodeField.setText(((StockItem)product).getId().toString());
+        		priceField.setText(Double.toString(((StockItem)product).getPrice()));
+        	}
+        }
+    }
+    
     // Fill dialog with data from the "database".
     public void fillDialogFields() {
         StockItem stockItem = getStockItemByBarcode();

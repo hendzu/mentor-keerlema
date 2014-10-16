@@ -110,7 +110,9 @@
 	<target name="git_commit">
 		<input message="Commit message"  addproperty="commit-message"/>
 		<input message="Username"  addproperty="username"/>
-		<input message="Password"  addproperty="password"/>
+		<input message="Password"  addproperty="password">
+			<handler type="secure"/>
+		</input>
 		
 		<echo message="Commiting all changes with message ${commit-message}"/>
 		<git command="add">
