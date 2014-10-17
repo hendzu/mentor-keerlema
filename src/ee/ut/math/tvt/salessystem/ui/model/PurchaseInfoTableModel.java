@@ -14,7 +14,7 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
 	private static final Logger log = Logger.getLogger(PurchaseInfoTableModel.class);
 	
 	public PurchaseInfoTableModel() {
-		super(new String[] { "Id", "Name", "Price", "Quantity"});
+		super(new String[] { "Id", "Name", "Price", "Quantity", "Sum"});
 	}
 
 	@Override
@@ -28,6 +28,8 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
 			return item.getPrice();
 		case 3:
 			return item.getQuantity();
+		case 4:
+			return item.getSum();
 		}
 		throw new IllegalArgumentException("Column index out of range");
 	}
@@ -57,11 +59,27 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
      */
     public void addItem(final SoldItem item) {
         /**
-         * XXX In case such stockItem already exists increase the quantity of the
+         * In case such stockItem already exists increase the quantity of the
          * existing stock.
          */
-        
-        rows.add(item);
+    	int index;
+    	int quantity;
+    	//Quantity should not exceed stock quantity.
+    	final int maxQuantity = item.getStockItem().getQuantity(); 
+    	if ((index = rows.indexOf(item)) != -1) {
+    		SoldItem row = rows.get(index);
+    		quantity = Math.min(row.getQuantity() + item.getQuantity(), maxQuantity);
+    		row.setQuantity(quantity);
+    	}
+    	else {
+    		quantity = Math.min(item.getQuantity(), maxQuantity);
+    		item.setQuantity(quantity);
+    		rows.add(item);
+    	}
+    	if (quantity >= maxQuantity) {
+    		//XXX message user about stock running out
+    	}
+    	
         log.debug("Added " + item.getName() + " quantity of " + item.getQuantity());
         fireTableDataChanged();
     }

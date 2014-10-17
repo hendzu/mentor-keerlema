@@ -7,6 +7,7 @@ package ee.ut.math.tvt.salessystem.domain.data;
  */
 public class SoldItem implements Cloneable, DisplayableItem {
 
+	
     private Long id;
     private StockItem stockItem;
     
@@ -18,7 +19,7 @@ public class SoldItem implements Cloneable, DisplayableItem {
         this.stockItem = stockItem;
         this.name = stockItem.getName();
         this.price = stockItem.getPrice();
-        this.quantity = quantity;
+        this.quantity = quantity;        
         
     }
     
@@ -52,7 +53,7 @@ public class SoldItem implements Cloneable, DisplayableItem {
     }
     
     public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+    	this.quantity = quantity;
     }
 
     public double getSum() {
@@ -66,5 +67,11 @@ public class SoldItem implements Cloneable, DisplayableItem {
     public void setStockItem(StockItem stockItem) {
         this.stockItem = stockItem;
     }
+
+
+	@Override
+	public boolean equals(Object obj) {
+		return ((SoldItem)obj).getId() == this.getId();
+	}
     
 }
