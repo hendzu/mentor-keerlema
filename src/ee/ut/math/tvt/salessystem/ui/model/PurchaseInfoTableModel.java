@@ -65,7 +65,7 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
     	int index;
     	int quantity;
     	//Quantity should not exceed stock quantity.
-    	final int maxQuantity = item.getStockItem().getQuantity(); 
+    	final int maxQuantity = item.getStockItem().getQuantity();
     	if ((index = rows.indexOf(item)) != -1) {
     		SoldItem row = rows.get(index);
     		quantity = Math.min(row.getQuantity() + item.getQuantity(), maxQuantity);
@@ -77,7 +77,7 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
     		rows.add(item);
     	}
     	if (quantity >= maxQuantity) {
-    		//XXX message user about stock running out
+    		log.info("Running out of " + item.getName()	);
     	}
     	
         log.debug("Added " + item.getName() + " quantity of " + item.getQuantity());

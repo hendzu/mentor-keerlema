@@ -88,13 +88,13 @@ public class PurchaseItemPanel extends JPanel implements ItemListener{
         panel.setLayout(new GridLayout(6, 2));
         panel.setBorder(BorderFactory.createTitledBorder("Product"));
         StockItem[] stock = new StockItem[model.getWarehouseTableModel().getTableRows().size()+1];
+        stock[0] = new StockItem();
         for(int i = 1; i<model.getWarehouseTableModel().getTableRows().size()+1;i++){
         	stock[i]=model.getWarehouseTableModel().getItemById(i);
         }
         items = new JComboBox<StockItem>(stock);
         items.addItemListener(this);
         // Initialize the textfields
-        Object product = items.getSelectedItem();
         barCodeField = new JTextField();
         quantityField = new JTextField("1");
         nameField = new JTextField();
@@ -150,7 +150,7 @@ public class PurchaseItemPanel extends JPanel implements ItemListener{
         
         if (e.getStateChange() == ItemEvent.SELECTED) {
         	Object product = e.getItem();
-        	if(((StockItem)product).getName() == null){
+        	if(((StockItem)product).getName() ==null){
         		reset();
         	}
         	else{
@@ -209,6 +209,7 @@ public class PurchaseItemPanel extends JPanel implements ItemListener{
      */
     @Override
     public void setEnabled(boolean enabled) {
+    	this.items.setEnabled(enabled);
         this.addItemButton.setEnabled(enabled);
         this.barCodeField.setEnabled(enabled);
         this.quantityField.setEnabled(enabled);
