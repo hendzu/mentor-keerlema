@@ -16,8 +16,7 @@ public class Intro {
 	public static void main(String[] args) {
 		final SalesDomainController domainController = new SalesDomainControllerImpl();
 		if (args.length == 1 && args[0].equals(MODE)) {
-			log.debug("MOde: " + MODE);
-			
+			log.debug("MOde: " + MODE);		
 			ConsoleUI cui  = new ConsoleUI(domainController);
 			cui.run();
 			
@@ -29,7 +28,7 @@ public class Intro {
 			intro.setAlwaysOnTop(true);
 			intro.setAlwaysOnTop(false);
 			try{
-				Thread.sleep(3000);
+				Thread.sleep(3001);
 			}
 			catch(InterruptedException e){
 				log.error(e.getMessage());
