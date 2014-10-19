@@ -170,19 +170,13 @@ public class PurchaseTab {
 
   /** Event handler for the <code>submit purchase</code> event. */
   protected void submitPurchaseButtonClicked() {
-    log.info("Sale complete");
-    try {
-      log.debug("Contents of the current basket:\n" + model.getCurrentPurchaseTableModel());
-      domainController.submitCurrentPurchase(
-          model.getCurrentPurchaseTableModel().getTableRows()
-      );
-      endSale();
-      PurchaseConfirmationUI pane = new PurchaseConfirmationUI(model.getCurrentPurchaseTableModel());
-      pane.setVisible(true);
-      model.getCurrentPurchaseTableModel().clear();
-    } catch (VerificationFailedException e1) {
-      log.error(e1.getMessage());
-    }
+    
+    PurchaseConfirmationUI pane = new PurchaseConfirmationUI(domainController, 
+    		model.getCurrentPurchaseTableModel());
+    pane.setEnabled(true);
+    pane.setVisible(true);
+    log.debug("Contents of the current basket:\n" + model.getCurrentPurchaseTableModel());
+    endSale();  
   }
   
   /* === Helper methods that bring the whole purchase-tab to a certain state
