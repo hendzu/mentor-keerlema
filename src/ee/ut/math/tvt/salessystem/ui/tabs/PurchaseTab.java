@@ -172,7 +172,7 @@ public class PurchaseTab {
   protected void submitPurchaseButtonClicked() {
     
     PurchaseConfirmationUI pane = new PurchaseConfirmationUI(domainController, 
-    		model.getCurrentPurchaseTableModel());
+    		model.getCurrentPurchaseTableModel(), model);
     pane.setEnabled(true);
     pane.setVisible(true);
     log.debug("Contents of the current basket:\n" + model.getCurrentPurchaseTableModel());

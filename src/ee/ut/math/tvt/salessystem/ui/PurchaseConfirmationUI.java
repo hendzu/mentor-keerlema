@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -14,9 +15,11 @@ import javax.swing.event.DocumentListener;
 import org.apache.log4j.Logger;
 
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
+import ee.ut.math.tvt.salessystem.domain.data.OrderHistoryItem;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.ui.model.PurchaseInfoTableModel;
+import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 import ee.ut.math.tvt.salessystem.ui.tabs.PurchaseTab;
 
 public class PurchaseConfirmationUI extends JFrame{
@@ -30,12 +33,15 @@ public class PurchaseConfirmationUI extends JFrame{
 	private JButton cancelPaymentButt;
 	
 	private SalesDomainController domainController;
+	private SalesSystemModel model;
 	
 	private static final long serialVersionUID = 1L;
 	
-	public PurchaseConfirmationUI(SalesDomainController sdc, final PurchaseInfoTableModel table){
+	public PurchaseConfirmationUI(SalesDomainController sdc, final PurchaseInfoTableModel table,
+			final SalesSystemModel model){
 		
 		domainController = sdc;
+		this.model = model;
 		JPanel panel = new JPanel();
 		
 		double sum= 0;
@@ -91,6 +97,8 @@ public class PurchaseConfirmationUI extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
+					model.getOrderHistoryTableModel().addItem(new OrderHistoryItem(Double.parseDouble(totalSum.getText()), 
+							new JTable(model.getOrderHistoryTableModel())));
 					domainController.submitCurrentPurchase(table.getTableRows());
 					table.clear();
 					log.info("Sale complete");
