@@ -3,6 +3,7 @@ package ee.ut.math.tvt.salessystem.ui.tabs;
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.ui.PurchaseConfirmationUI;
+import ee.ut.math.tvt.salessystem.ui.model.PurchaseInfoTableModel;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 import ee.ut.math.tvt.salessystem.ui.panels.PurchaseItemPanel;
 
@@ -136,8 +137,6 @@ public class PurchaseTab {
 
 
 
-
-
   /* === Event handlers for the menu buttons
    *     (get executed when the buttons are clicked)
    */
@@ -169,15 +168,33 @@ public class PurchaseTab {
 
 
   /** Event handler for the <code>submit purchase</code> event. */
-  protected void submitPurchaseButtonClicked() {
-    
-    PurchaseConfirmationUI pane = new PurchaseConfirmationUI(domainController, 
-    		model.getCurrentPurchaseTableModel(), model);
-    pane.setEnabled(true);
-    pane.setVisible(true);
-    log.debug("Contents of the current basket:\n" + model.getCurrentPurchaseTableModel());
-    endSale();  
-  }
+	protected void submitPurchaseButtonClicked() {
+		final PurchaseInfoTableModel table = model
+				.getCurrentPurchaseTableModel();
+		ActionListener confirmed = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					domainController
+							.submitCurrentPurchase(table.getTableRows());
+					table.clear();
+					endSale();
+					log.info("Sale complete");
+				} catch (VerificationFailedException e1) {
+					log.error(e1.getMessage());
+				}
+			}
+		};
+		
+		PurchaseConfirmationUI pane = new PurchaseConfirmationUI(table);
+		
+		pane.addConfirmListener(confirmed);
+		
+		pane.setEnabled(true);
+		pane.setVisible(true);
+		this.log.debug("Contents of the current basket:\n"
+				+ model.getCurrentPurchaseTableModel());
+	}
   
   /* === Helper methods that bring the whole purchase-tab to a certain state
    *     when called.

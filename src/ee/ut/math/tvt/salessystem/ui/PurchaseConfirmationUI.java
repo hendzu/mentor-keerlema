@@ -12,18 +12,13 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import org.apache.log4j.Logger;
-
-import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.domain.data.OrderHistoryItem;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
-import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.ui.model.PurchaseInfoTableModel;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
-import ee.ut.math.tvt.salessystem.ui.tabs.PurchaseTab;
+
 
 public class PurchaseConfirmationUI extends JFrame{
-	private static final Logger log = Logger.getLogger(PurchaseConfirmationUI.class);
 
 	private JTextField totalSum;
 	private JTextField payment;
@@ -32,17 +27,21 @@ public class PurchaseConfirmationUI extends JFrame{
 	private JButton acceptPaymentButt;
 	private JButton cancelPaymentButt;
 	
-	private SalesDomainController domainController;
 	private SalesSystemModel model;
 	
 	private static final long serialVersionUID = 1L;
 	
-	public PurchaseConfirmationUI(SalesDomainController sdc, final PurchaseInfoTableModel table,
-			final SalesSystemModel model){
+	public JButton getAcceptPaymentButt() {
+		return acceptPaymentButt;
+	}
+
+	public JButton getCancelPaymentButt() {
+		return cancelPaymentButt;
+	}
+
+	public PurchaseConfirmationUI(final PurchaseInfoTableModel table){
 		
-		domainController = sdc;
-		this.model = model;
-		JPanel panel = new JPanel();
+		final JPanel panel = new JPanel();
 		
 		double sum= 0;
 		for(SoldItem item:table.getTableRows()){
@@ -96,21 +95,30 @@ public class PurchaseConfirmationUI extends JFrame{
 		acceptPaymentButt.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
-					model.getOrderHistoryTableModel().addItem(new OrderHistoryItem(Double.parseDouble(totalSum.getText()), 
-							new JTable(model.getOrderHistoryTableModel())));
-					domainController.submitCurrentPurchase(table.getTableRows());
-					table.clear();
-					log.info("Sale complete");
-				}
-				catch (VerificationFailedException e1) {
-					log.error(e1.getMessage());
-					}
+				model.getOrderHistoryTableModel().addItem(new OrderHistoryItem(Double.parseDouble(totalSum.getText()), 
+						new JTable(model.getOrderHistoryTableModel())));			
+			}
+		});
+		
+		//Could probably do better here
+		final PurchaseConfirmationUI windowRef = this;
+		cancelPaymentButt.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				windowRef.setVisible(false);
 			}
 		});
 
 		payment.getDocument().addDocumentListener(documentlistener);
 		add(panel);
 		pack();
+	}
+	
+	public void addConfirmListener(ActionListener listener) {
+		acceptPaymentButt.addActionListener(listener);
+	}
+	public void addCancelListener(ActionListener listener) {
+		cancelPaymentButt.addActionListener(listener);
 	}
 }
