@@ -115,7 +115,7 @@ public class PurchaseConfirmationUI extends JFrame{
 		pack();
 	}
 	
-	public void addConfirmListener(ActionListener listener) {
+	public void addAcceptListener(ActionListener listener) {
 		acceptPaymentButt.addActionListener(listener);
 	}
 	public void addCancelListener(ActionListener listener) {

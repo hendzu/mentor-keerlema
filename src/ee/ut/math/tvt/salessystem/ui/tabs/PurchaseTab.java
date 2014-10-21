@@ -23,7 +23,7 @@ import org.apache.log4j.Logger;
 
 /**
  * Encapsulates everything that has to do with the purchase tab (the tab
- * labelled "Point-of-sale" in the menu).
+ * labeled "Point-of-sale" in the menu).
  */
 public class PurchaseTab {
 
@@ -169,9 +169,10 @@ public class PurchaseTab {
 
   /** Event handler for the <code>submit purchase</code> event. */
 	protected void submitPurchaseButtonClicked() {
+		lockTab();
 		final PurchaseInfoTableModel table = model
 				.getCurrentPurchaseTableModel();
-		ActionListener confirmed = new ActionListener() {
+		ActionListener accepted = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -185,14 +186,21 @@ public class PurchaseTab {
 				}
 			}
 		};
+		ActionListener cancelled = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				unlockTab();
+			}
+		};
 		
 		PurchaseConfirmationUI pane = new PurchaseConfirmationUI(table, model);
 		
-		pane.addConfirmListener(confirmed);
-		
+		pane.addAcceptListener(accepted);
+		pane.addCancelListener(cancelled);
 		pane.setEnabled(true);
 		pane.setVisible(true);
-		this.log.debug("Contents of the current basket:\n"
+		log.debug("Contents of the current basket:\n"
 				+ model.getCurrentPurchaseTableModel());
 	}
   
@@ -220,8 +228,22 @@ public class PurchaseTab {
     purchasePane.setEnabled(false);
   }
 
-
-
+  private void lockTab() 
+  {
+	  cancelPurchase.setEnabled(false);
+	  submitPurchase.setEnabled(false);
+	  newPurchase.setEnabled(false);
+	  purchasePane.setEnabled(false);
+  }
+  
+  private void unlockTab() 
+  {
+	  cancelPurchase.setEnabled(true);
+	  submitPurchase.setEnabled(true);
+	  newPurchase.setEnabled(false);
+	  purchasePane.setEnabled(true);
+  }
+  
 
   /* === Next methods just create the layout constraints objects that control the
    *     the layout of different elements in the purchase tab. These definitions are
