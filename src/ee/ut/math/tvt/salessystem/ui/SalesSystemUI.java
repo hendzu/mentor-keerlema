@@ -84,7 +84,10 @@ public class SalesSystemUI extends JFrame {
 
     getContentPane().add(tabbedPane);
   }
-
+  
+  public HistoryTab getHistoryTab() {
+	return historyTab;
+  }
 }
 
 

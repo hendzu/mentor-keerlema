@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -24,6 +25,7 @@ import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 public class HistoryTab {
 	private final SalesDomainController domainController;
 	private SalesSystemModel model;
+	private ArrayList<OrderHistoryItem> historylist = new ArrayList<OrderHistoryItem>();
 
 	private JTable InfoTable;
 
@@ -42,11 +44,11 @@ public class HistoryTab {
         GridBagConstraints gc = new GridBagConstraints();
         panel.setLayout(gb);
 
-        gc.fill = GridBagConstraints.HORIZONTAL;
-        gc.anchor = GridBagConstraints.NORTH;
+        gc.fill = GridBagConstraints.BOTH;
+        gc.anchor = GridBagConstraints.WEST;
         gc.gridwidth = GridBagConstraints.REMAINDER;
-        gc.weightx = 1.0d;
-        gc.weighty = 1.0d;
+        gc.weightx = 0.2;
+        gc.weighty = 1.0;
         panel.add(drawHistoryMainPane(), gc);
         gc.weighty = 1.0;
         gc.fill = GridBagConstraints.BOTH;
@@ -57,21 +59,6 @@ public class HistoryTab {
     
     public Component drawHistoryMainPane() {
     	JPanel panel = new JPanel();
-    	JTable HistoryTable = new JTable(model.getOrderHistoryTableModel());
-    	HistoryTable.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
-
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				Object item = e.getClass();
-				InfoTable = ((OrderHistoryItem)item).getItems();				
-			}   		
-    	});
-    	
-        JTableHeader header = HistoryTable.getTableHeader();
-   	    header.setReorderingAllowed(false);
-   	    
-        JScrollPane scrollPane = new JScrollPane(HistoryTable);
-        
         GridBagConstraints gc = new GridBagConstraints();
    	    GridBagLayout gb = new GridBagLayout();
    	    gc.fill = GridBagConstraints.BOTH;
@@ -79,8 +66,22 @@ public class HistoryTab {
    	    gc.weighty = 1.0;
    	    
         panel.setLayout(gb);
-   	    panel.add(scrollPane, gc);
     	panel.setBorder(BorderFactory.createTitledBorder("Order History"));
+    	final JTable HistoryTable = new JTable(model.getOrderHistoryTableModel());
+   	    HistoryTable.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				OrderHistoryItem item = historylist.get(HistoryTable.convertColumnIndexToModel(HistoryTable.getSelectedRow()));
+				InfoTable = item.getItems();				
+			}   		
+    	});
+    	
+        JTableHeader header = HistoryTable.getTableHeader();
+   	    header.setReorderingAllowed(false);
+   	    
+        JScrollPane scrollPane = new JScrollPane(HistoryTable);
+   	    panel.add(scrollPane, gc);
         return panel;
     }
     

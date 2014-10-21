@@ -32,7 +32,6 @@ public class OrderHistoryTableModel extends SalesSystemTableModel<OrderHistoryIt
 		for (int i = 0; i < headers.length; i++)
 			buffer.append(headers[i] + "\t");
 		buffer.append("\n");
-
 		for (final OrderHistoryItem item : rows) {
 			buffer.append(item.getId() + "\t");
 			buffer.append(item.getDate() + "\t");

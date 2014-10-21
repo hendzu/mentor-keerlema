@@ -39,8 +39,8 @@ public class PurchaseConfirmationUI extends JFrame{
 		return cancelPaymentButt;
 	}
 
-	public PurchaseConfirmationUI(final PurchaseInfoTableModel table){
-		
+	public PurchaseConfirmationUI(final PurchaseInfoTableModel table, final SalesSystemModel model){
+		this.model = model;
 		final JPanel panel = new JPanel();
 		
 		double sum= 0;
@@ -96,7 +96,7 @@ public class PurchaseConfirmationUI extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				model.getOrderHistoryTableModel().addItem(new OrderHistoryItem(Double.parseDouble(totalSum.getText()), 
-						new JTable(model.getOrderHistoryTableModel())));			
+						new JTable(model.getCurrentPurchaseTableModel())));			
 			}
 		});
 		

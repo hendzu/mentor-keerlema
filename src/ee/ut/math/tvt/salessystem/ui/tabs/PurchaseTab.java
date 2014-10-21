@@ -186,7 +186,7 @@ public class PurchaseTab {
 			}
 		};
 		
-		PurchaseConfirmationUI pane = new PurchaseConfirmationUI(table);
+		PurchaseConfirmationUI pane = new PurchaseConfirmationUI(table, model);
 		
 		pane.addConfirmListener(confirmed);
 		
