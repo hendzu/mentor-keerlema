@@ -14,29 +14,33 @@ import javax.swing.event.DocumentListener;
 
 import ee.ut.math.tvt.salessystem.domain.data.OrderHistoryItem;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
+import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.ui.model.PurchaseInfoTableModel;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 
 
 public class PurchaseConfirmationUI extends JFrame{
 
-	private JTextField totalSum;
-	private JTextField payment;
-	private JTextField change;
+	private JTextField totalSumField;
+	private JTextField paymentField;
+	private JTextField changeField;
 	
 	private JButton acceptPaymentButt;
 	private JButton cancelPaymentButt;
 	
-	private SalesSystemModel model;
+	private double change;
 	
 	private static final long serialVersionUID = 1L;
 	
 	public double getSum() {
-		return Double.parseDouble(totalSum.getText());
+		return Double.parseDouble(totalSumField.getText());
+	}
+	
+	public double getChange() {
+		return change;
 	}
 
-	public PurchaseConfirmationUI(final PurchaseInfoTableModel table, final SalesSystemModel model){
-		this.model = model;
+	public PurchaseConfirmationUI(final PurchaseInfoTableModel table) {
 		final JPanel panel = new JPanel();
 		
 		double sum= 0;
@@ -44,22 +48,22 @@ public class PurchaseConfirmationUI extends JFrame{
 			sum += item.getSum();
 		}
 		
-		totalSum = new JTextField(Double.toString(sum));
-		change = new JTextField(8);
-		payment = new JTextField(8);
+		totalSumField = new JTextField(Double.toString(sum));
+		changeField = new JTextField(8);
+		paymentField = new JTextField(8);
 		
-		totalSum.setEditable(false);
-		change.setEditable(false);
+		totalSumField.setEditable(false);
+		changeField.setEditable(false);
 		
 		acceptPaymentButt = new JButton("Accept");
 		cancelPaymentButt = new JButton("Cancel");
 		
 		panel.add(new JLabel("Total sum:"));
-		panel.add(totalSum);
+		panel.add(totalSumField);
 		panel.add(new JLabel("Payment:"));
-		panel.add(payment);
+		panel.add(paymentField);
 		panel.add(new JLabel("Change:"));
-		panel.add(change);
+		panel.add(changeField);
 		
 		panel.add(acceptPaymentButt);
 		panel.add(cancelPaymentButt);
@@ -73,8 +77,8 @@ public class PurchaseConfirmationUI extends JFrame{
 
 			@Override
 			public void removeUpdate(DocumentEvent e) {
-				if (payment.getText().isEmpty()) {
-					change.setText("");
+				if (paymentField.getText().isEmpty()) {
+					changeField.setText("");
 				}
 				else {
 					changedUpdate(e);
@@ -83,8 +87,9 @@ public class PurchaseConfirmationUI extends JFrame{
 
 			@Override
 			public void changedUpdate(DocumentEvent e) {
-				double Change = Double.parseDouble(totalSum.getText()) - Double.parseDouble(payment.getText());
-				change.setText(Double.toString(Change));
+				
+				setChange(Double.parseDouble(totalSumField.getText()) - 
+						Double.parseDouble(paymentField.getText()));
 			}
 		};
 		
@@ -100,9 +105,14 @@ public class PurchaseConfirmationUI extends JFrame{
 		acceptPaymentButt.addActionListener(choiceMade);
 		cancelPaymentButt.addActionListener(choiceMade);
 
-		payment.getDocument().addDocumentListener(documentlistener);
+		paymentField.getDocument().addDocumentListener(documentlistener);
 		add(panel);
 		pack();
+	}
+	
+	private void setChange(double change) {
+		this.change = change;
+		changeField.setText(Double.toString(change));
 	}
 	
 	public void addAcceptListener(ActionListener listener) {

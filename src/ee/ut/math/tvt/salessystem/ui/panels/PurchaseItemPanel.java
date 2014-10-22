@@ -29,7 +29,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 /**
- * Purchase pane + shopping cart tabel UI.
+ * Purchase pane + shopping cart table UI.
  */
 public class PurchaseItemPanel extends JPanel implements ItemListener{
 
@@ -38,7 +38,6 @@ public class PurchaseItemPanel extends JPanel implements ItemListener{
     // Text field on the dialogPane
     private JTextField barCodeField;
     private JTextField quantityField;
-    private JTextField nameField;
     private JTextField priceField;
 
     private JButton addItemButton;
@@ -99,7 +98,6 @@ public class PurchaseItemPanel extends JPanel implements ItemListener{
         // Initialize the textfields
         barCodeField = new JTextField();
         quantityField = new JTextField(1);
-        nameField = new JTextField();
         priceField = new JTextField();
         
         quantityField.addFocusListener(new FocusListener() {
@@ -128,7 +126,7 @@ public class PurchaseItemPanel extends JPanel implements ItemListener{
             }
         });*/
 
-        nameField.setEditable(false);
+        barCodeField.setEditable(false);
         priceField.setEditable(false);
 
         // == Add components to the panel
@@ -183,7 +181,6 @@ public class PurchaseItemPanel extends JPanel implements ItemListener{
         StockItem stockItem = getStockItemByBarcode();
 
         if (stockItem != null) {
-            nameField.setText(stockItem.getName());
             String priceString = String.valueOf(stockItem.getPrice());
             priceField.setText(priceString);
         } else {
@@ -239,7 +236,6 @@ public class PurchaseItemPanel extends JPanel implements ItemListener{
     public void reset() {
         barCodeField.setText("");
         quantityField.setText("1");
-        nameField.setText("");
         priceField.setText("");
     }
 

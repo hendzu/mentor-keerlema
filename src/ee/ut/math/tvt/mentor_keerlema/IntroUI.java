@@ -58,7 +58,7 @@ public class IntroUI extends JFrame{
 		JLabel tname = new JLabel("Team name: "+ prop.getProperty("team.name"));
 		JLabel tleader = new JLabel("Team leader: "+ prop.getProperty("team.leader"));
 		JLabel tleaderemail = new JLabel("Team leader email: " + prop.getProperty("team.leader.email"));
-		JLabel tmembers = new JLabel("Team memers: " + prop.getProperty("team.members"));
+		JLabel tmembers = new JLabel("Team members: " + prop.getProperty("team.members"));
 		ImageIcon logo = new ImageIcon(prop.getProperty("team.logo"));
 		JLabel tlogo = new JLabel(logo);
 		tlogo.setIcon(logo);

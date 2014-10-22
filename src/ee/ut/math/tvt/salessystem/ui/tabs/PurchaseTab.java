@@ -173,12 +173,14 @@ public class PurchaseTab {
 	protected void submitPurchaseButtonClicked() {
 		lockTab();
 		final PurchaseInfoTableModel table = model.getCurrentPurchaseTableModel();
-		final PurchaseConfirmationUI pane = new PurchaseConfirmationUI(table, model);
+		final PurchaseConfirmationUI pane = new PurchaseConfirmationUI(table);
 		
 		ActionListener accepted = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
+					if (pane.getChange() > 0)
+						throw new VerificationFailedException();
 					domainController
 							.submitCurrentPurchase(table.getTableRows());
 					model.getOrderHistoryTableModel().addItem(
@@ -187,7 +189,10 @@ public class PurchaseTab {
 					table.clear();
 					endSale();
 					log.info("Sale complete");
-				} catch (VerificationFailedException e1) {
+
+				} 
+				//TODO: display error message to user in message box 
+				catch (VerificationFailedException e1) {
 					log.error(e1.getMessage());
 					unlockTab();
 				}
