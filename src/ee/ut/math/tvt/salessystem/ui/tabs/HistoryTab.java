@@ -77,7 +77,6 @@ public class HistoryTab {
 			public void valueChanged(ListSelectionEvent e) {
 				OrderHistoryItem item = model.getOrderHistoryTableModel().getTableRows()
 						.get(HistoryTable.convertRowIndexToModel(HistoryTable.getSelectedRow()));
-				System.out.println(item.getItems());
 				infoTable.populateWithData(item.getItems());
 				InfoTable.updateUI();
 			}   		
