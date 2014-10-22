@@ -16,6 +16,7 @@ import javax.swing.table.JTableHeader;
 
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.domain.data.OrderHistoryItem;
+import ee.ut.math.tvt.salessystem.ui.model.PurchaseInfoTableModel;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 
 /**
@@ -25,6 +26,7 @@ import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 public class HistoryTab {
 	private final SalesDomainController domainController;
 	private SalesSystemModel model;
+	private PurchaseInfoTableModel infoTable;
 	private ArrayList<OrderHistoryItem> historylist = new ArrayList<OrderHistoryItem>();
 
 	private JTable InfoTable;
@@ -32,8 +34,9 @@ public class HistoryTab {
     public HistoryTab(SalesDomainController domainController, SalesSystemModel model){
     	this.domainController = domainController;
     	this.model = model;
+    	this.infoTable = new PurchaseInfoTableModel();
     	
-    	InfoTable = new JTable(model.getCurrentPurchaseTableModel());
+    	InfoTable = new JTable(infoTable);
     } 
     
     public Component draw() {
@@ -72,8 +75,11 @@ public class HistoryTab {
 
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				OrderHistoryItem item = historylist.get(HistoryTable.convertColumnIndexToModel(HistoryTable.getSelectedRow()));
-				InfoTable = item.getItems();				
+				OrderHistoryItem item = model.getOrderHistoryTableModel().getTableRows()
+						.get(HistoryTable.convertRowIndexToModel(HistoryTable.getSelectedRow()));
+				System.out.println(item.getItems());
+				infoTable.populateWithData(item.getItems());
+				InfoTable.updateUI();
 			}   		
     	});
     	

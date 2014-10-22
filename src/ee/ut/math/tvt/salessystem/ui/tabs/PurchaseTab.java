@@ -182,8 +182,8 @@ public class PurchaseTab {
 					domainController
 							.submitCurrentPurchase(table.getTableRows());
 					model.getOrderHistoryTableModel().addItem(
-							new OrderHistoryItem(pane.getSum(), new JTable(model.getCurrentPurchaseTableModel())
-							));
+							new OrderHistoryItem(pane.getSum(),
+									model.getCurrentPurchaseTableModel().getTableRows()));
 					table.clear();
 					endSale();
 					log.info("Sale complete");

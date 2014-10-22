@@ -2,19 +2,19 @@ package ee.ut.math.tvt.salessystem.domain.data;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
-
-import javax.swing.JTable;
+import java.util.List;
 
 public class OrderHistoryItem implements DisplayableItem {
 	private String date;
 	private String time;
 	private double price;
-	private JTable items;
+	private List<SoldItem> items;
 	
 	
-	public OrderHistoryItem(double price, JTable items) {
-		this.items = items;
+	public OrderHistoryItem(double price, List<SoldItem> list) {
+		this.items = list;
 		this.price = price;
 		DateFormat DateFormat = new SimpleDateFormat("yyyy:MM:dd");
 		DateFormat TimeFormat = new SimpleDateFormat("hh:mm:ss");
@@ -23,12 +23,15 @@ public class OrderHistoryItem implements DisplayableItem {
 		this.date = DateFormat.format(date);
 		this.time = TimeFormat.format(date);
 	}
-	public JTable getItems() {
+
+	public List<SoldItem> getItems() {
 		return items;
 	}
-	public void setItems(JTable items) {
+
+	public void setItems(List<SoldItem> items) {
 		this.items = items;
 	}
+
 	public String getDate() {
 		return date;
 	}
