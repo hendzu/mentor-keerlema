@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -71,23 +73,19 @@ public class HistoryTab {
         panel.setLayout(gb);
     	panel.setBorder(BorderFactory.createTitledBorder("Order History"));
     	final JTable HistoryTable = new JTable(model.getOrderHistoryTableModel());
-   	    HistoryTable.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
-
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				System.out.println(HistoryTable.
-								getSelectedRow());
-				if(HistoryTable.getSelectedRow() == -1){
-					
-				}else{
-					
-					OrderHistoryItem item = model.getOrderHistoryTableModel().getTableRows()
-							.get(HistoryTable.convertRowIndexToModel(HistoryTable.getSelectedRow()));
+    	
+    	HistoryTable.addMouseListener(new MouseAdapter(){
+    		public void mouseClicked(MouseEvent e){
+    			if(e.getClickCount() == 1){
+    				JTable target = (JTable)e.getSource();
+    				int row = target.getSelectedRow();
+    				OrderHistoryItem item = model.getOrderHistoryTableModel().getTableRows()
+							.get(row);
 					infoTable.populateWithData(item.getItems());
 					InfoTable.updateUI();
-					HistoryTable.clearSelection();
-				}
-			}   		
+    				
+    			}
+    		}
     	});
     	
         JTableHeader header = HistoryTable.getTableHeader();
