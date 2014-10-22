@@ -147,7 +147,7 @@ public class PurchaseItemPanel extends JPanel implements ItemListener{
         panel.add(nameField);*/
 
         // - price
-        panel.add(new JLabel("Price:"));
+        panel.add(new JLabel("Price(per unit):"));
         panel.add(priceField);
 
         // Create and add the button
