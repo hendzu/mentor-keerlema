@@ -25,6 +25,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 /**
  * Purchase pane + shopping cart tabel UI.
@@ -96,9 +98,25 @@ public class PurchaseItemPanel extends JPanel implements ItemListener{
         items.addItemListener(this);
         // Initialize the textfields
         barCodeField = new JTextField();
-        quantityField = new JTextField("1");
+        quantityField = new JTextField(1);
         nameField = new JTextField();
         priceField = new JTextField();
+        
+        quantityField.addFocusListener(new FocusListener() {
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(Integer.parseInt(quantityField.getText()) < 1){
+					quantityField.setText("1");
+				}
+			}
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 
         // Fill the dialog fields if the bar code text field loses focus
 /*        barCodeField.addFocusListener(new FocusListener() {
@@ -131,7 +149,7 @@ public class PurchaseItemPanel extends JPanel implements ItemListener{
         // - price
         panel.add(new JLabel("Price:"));
         panel.add(priceField);
-        
+
         // Create and add the button
         addItemButton = new JButton("Add to cart");
         addItemButton.addActionListener(new ActionListener() {
