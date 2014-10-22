@@ -1,5 +1,6 @@
 package ee.ut.math.tvt.salessystem.ui.tabs;
 
+import ee.ut.math.tvt.salessystem.domain.data.OrderHistoryItem;
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.ui.PurchaseConfirmationUI;
@@ -18,6 +19,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 
 import org.apache.log4j.Logger;
 
@@ -170,19 +172,24 @@ public class PurchaseTab {
   /** Event handler for the <code>submit purchase</code> event. */
 	protected void submitPurchaseButtonClicked() {
 		lockTab();
-		final PurchaseInfoTableModel table = model
-				.getCurrentPurchaseTableModel();
+		final PurchaseInfoTableModel table = model.getCurrentPurchaseTableModel();
+		final PurchaseConfirmationUI pane = new PurchaseConfirmationUI(table, model);
+		
 		ActionListener accepted = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
 					domainController
 							.submitCurrentPurchase(table.getTableRows());
+					model.getOrderHistoryTableModel().addItem(
+							new OrderHistoryItem(pane.getSum(), new JTable(model.getCurrentPurchaseTableModel())
+							));
 					table.clear();
 					endSale();
 					log.info("Sale complete");
 				} catch (VerificationFailedException e1) {
 					log.error(e1.getMessage());
+					unlockTab();
 				}
 			}
 		};
@@ -193,8 +200,6 @@ public class PurchaseTab {
 				unlockTab();
 			}
 		};
-		
-		PurchaseConfirmationUI pane = new PurchaseConfirmationUI(table, model);
 		
 		pane.addAcceptListener(accepted);
 		pane.addCancelListener(cancelled);
