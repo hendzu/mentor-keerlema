@@ -75,10 +75,18 @@ public class HistoryTab {
 
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				OrderHistoryItem item = model.getOrderHistoryTableModel().getTableRows()
-						.get(HistoryTable.convertRowIndexToModel(HistoryTable.getSelectedRow()));
-				infoTable.populateWithData(item.getItems());
-				InfoTable.updateUI();
+				System.out.println(HistoryTable.
+								getSelectedRow());
+				if(HistoryTable.getSelectedRow() == -1){
+					
+				}else{
+					
+					OrderHistoryItem item = model.getOrderHistoryTableModel().getTableRows()
+							.get(HistoryTable.convertRowIndexToModel(HistoryTable.getSelectedRow()));
+					infoTable.populateWithData(item.getItems());
+					InfoTable.updateUI();
+					HistoryTable.clearSelection();
+				}
 			}   		
     	});
     	
