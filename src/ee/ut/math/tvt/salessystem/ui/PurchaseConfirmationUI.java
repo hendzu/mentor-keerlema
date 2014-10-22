@@ -31,12 +31,8 @@ public class PurchaseConfirmationUI extends JFrame{
 	
 	private static final long serialVersionUID = 1L;
 	
-	public JButton getAcceptPaymentButt() {
-		return acceptPaymentButt;
-	}
-
-	public JButton getCancelPaymentButt() {
-		return cancelPaymentButt;
+	public double getSum() {
+		return Double.parseDouble(totalSum.getText());
 	}
 
 	public PurchaseConfirmationUI(final PurchaseInfoTableModel table, final SalesSystemModel model){
@@ -92,23 +88,17 @@ public class PurchaseConfirmationUI extends JFrame{
 			}
 		};
 		
-		acceptPaymentButt.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				model.getOrderHistoryTableModel().addItem(new OrderHistoryItem(Double.parseDouble(totalSum.getText()), 
-						new JTable(model.getCurrentPurchaseTableModel())));			
-			}
-		});
-		
 		//Could probably do better here
 		final PurchaseConfirmationUI windowRef = this;
-		cancelPaymentButt.addActionListener(new ActionListener() {
-			
+		ActionListener choiceMade = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				windowRef.setVisible(false);
 			}
-		});
+		};
+		
+		acceptPaymentButt.addActionListener(choiceMade);
+		cancelPaymentButt.addActionListener(choiceMade);
 
 		payment.getDocument().addDocumentListener(documentlistener);
 		add(panel);
