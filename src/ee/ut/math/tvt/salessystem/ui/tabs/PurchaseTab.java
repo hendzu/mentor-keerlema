@@ -1,6 +1,7 @@
 package ee.ut.math.tvt.salessystem.ui.tabs;
 
 import ee.ut.math.tvt.salessystem.domain.data.OrderHistoryItem;
+import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.ui.PurchaseConfirmationUI;
@@ -12,6 +13,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -186,6 +188,11 @@ public class PurchaseTab {
 					model.getOrderHistoryTableModel().addItem(
 							new OrderHistoryItem(pane.getSum(),
 									model.getCurrentPurchaseTableModel().getTableRows()));
+					for(SoldItem item: table.getTableRows()){
+						model.getWarehouseTableModel().getItemById(item.getId()).setQuantity(
+								model.getWarehouseTableModel().getItemById(item.getId()).getQuantity() 
+								- item.getQuantity());
+					}
 					table.clear();
 					endSale();
 					log.info("Sale complete");
