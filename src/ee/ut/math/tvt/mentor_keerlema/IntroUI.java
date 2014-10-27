@@ -51,7 +51,6 @@ public class IntroUI extends JFrame{
 		try {
 			prop = getProperties(Application);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			log.error(e.getMessage());
 		}
 		

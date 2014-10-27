@@ -8,11 +8,15 @@ import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 
+import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
+import ee.ut.math.tvt.salessystem.ui.model.StockTableModel;
 
 /**
  * Implementation of the sales domain controller.
  */
 public class SalesDomainControllerImpl implements SalesDomainController {
+	
+	private SalesSystemModel model; 
 	
 	public void submitCurrentPurchase(List<SoldItem> goods) throws VerificationFailedException {
 		
@@ -20,7 +24,8 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 		// cannot buy chupa-chups
 		//throw new VerificationFailedException("Underaged!");
 		
-		// XXX - Save purchase
+		//StockTableModel warehouse = model.getWarehouseTableModel();
+		
 	}
 
 	public void cancelCurrentPurchase() throws VerificationFailedException {				
@@ -47,5 +52,10 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 		dataset.add(beer);
 		
 		return dataset;
+	}
+
+	@Override
+	public void setModel(SalesSystemModel model) {
+		this.model = model;
 	}
 }

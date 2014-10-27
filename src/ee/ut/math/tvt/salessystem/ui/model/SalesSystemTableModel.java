@@ -73,5 +73,9 @@ public abstract class SalesSystemTableModel<T extends DisplayableItem> extends
         rows.addAll(data);
     }
     
+    public String[] getHeaders()
+    {
+    	return headers;
+    }
     
 }

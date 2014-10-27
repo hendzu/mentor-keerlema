@@ -175,18 +175,18 @@ public class PurchaseTab {
 	protected void submitPurchaseButtonClicked() {
 		lockTab();
 		final PurchaseInfoTableModel table = model.getCurrentPurchaseTableModel();
-		final PurchaseConfirmationUI pane = new PurchaseConfirmationUI(table);
+		final PurchaseConfirmationUI panel = new PurchaseConfirmationUI(table);
 		
 		ActionListener accepted = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					if (pane.getChange() > 0)
+					if (panel.getChange() > 0)
 						throw new VerificationFailedException();
 					domainController
 							.submitCurrentPurchase(table.getTableRows());
 					model.getOrderHistoryTableModel().addItem(
-							new OrderHistoryItem(pane.getSum(),
+							new OrderHistoryItem(panel.getSum(),
 									model.getCurrentPurchaseTableModel().getTableRows()));
 					for(SoldItem item: table.getTableRows()){
 						model.getWarehouseTableModel().getItemById(item.getId()).setQuantity(
@@ -213,10 +213,10 @@ public class PurchaseTab {
 			}
 		};
 		
-		pane.addAcceptListener(accepted);
-		pane.addCancelListener(cancelled);
-		pane.setEnabled(true);
-		pane.setVisible(true);
+		panel.addAcceptListener(accepted);
+		panel.addCancelListener(cancelled);
+		panel.setEnabled(true);
+		panel.setVisible(true);
 		log.debug("Contents of the current basket:\n"
 				+ model.getCurrentPurchaseTableModel());
 	}

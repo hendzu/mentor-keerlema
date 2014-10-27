@@ -6,14 +6,13 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
+
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+
 import javax.swing.table.JTableHeader;
 
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
@@ -29,7 +28,6 @@ public class HistoryTab {
 	private final SalesDomainController domainController;
 	private SalesSystemModel model;
 	private PurchaseInfoTableModel infoTable;
-	private ArrayList<OrderHistoryItem> historylist = new ArrayList<OrderHistoryItem>();
 
 	private JTable InfoTable;
 
@@ -86,6 +84,7 @@ public class HistoryTab {
     				
     			}
     		}
+
     	});
     	
         JTableHeader header = HistoryTable.getTableHeader();
