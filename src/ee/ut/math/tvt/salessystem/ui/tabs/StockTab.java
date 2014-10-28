@@ -1,6 +1,7 @@
 package ee.ut.math.tvt.salessystem.ui.tabs;
 
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
+import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 
 import java.awt.Color;
@@ -110,14 +111,7 @@ public class StockTab {
 			}
 		});
 		
-		submit.addActionListener(new ActionListener() {	
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
-		
-		ArrayList<JTextField> fields = new ArrayList<JTextField>();
+		final ArrayList<JTextField> fields = new ArrayList<JTextField>();
 		for (String header : model.getWarehouseTableModel().getHeaders())
 		{
 			JLabel label = new JLabel(header);
@@ -126,6 +120,46 @@ public class StockTab {
 			addItemPanel.add(field, gc);
 			fields.add(field);
 		}
+		JLabel label = new JLabel("Description");
+		addItemPanel.add(label, gc);
+		JTextField field = new JTextField();
+		addItemPanel.add(field, gc);
+		fields.add(field);
+		
+		submit.addActionListener(new ActionListener() {	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Long id = 0L;
+				String name = "";
+				String desc = "";
+				double price = 0.0;
+				int quantity = 0;
+				int element = 0;
+				for (JTextField field:fields){
+					switch(element){
+					case 0:
+						id = Long.parseLong(field.getText());
+						break;
+					case 1:
+						name = field.getText();
+						break;
+					case 2:
+						price = Double.parseDouble(field.getText());
+						break;
+					case 3:
+						quantity = Integer.parseInt(field.getText());
+						break;
+					case 4:
+						desc = field.getText();
+						break;
+					}
+					element ++;			
+				}
+				model.getWarehouseTableModel().addItem(new StockItem(id, name, desc, price, quantity));
+				addItem.setEnabled(true);
+				addItemFrame.dispose();
+			}
+		});
 		
 		addItemPanel.add(submit, gc);
 		addItemPanel.add(cancel);

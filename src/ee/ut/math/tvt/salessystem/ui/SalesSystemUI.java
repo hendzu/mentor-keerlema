@@ -47,7 +47,7 @@ public class SalesSystemUI extends JFrame {
     historyTab = new HistoryTab(domainController, model);
     stockTab = new StockTab(domainController, model);
     purchaseTab = new PurchaseTab(domainController, model);
-
+    
     setTitle("Sales system");
 
     // set L&F to the nice Windows style
@@ -87,6 +87,10 @@ public class SalesSystemUI extends JFrame {
   
   public HistoryTab getHistoryTab() {
 	return historyTab;
+  }
+  
+  public PurchaseTab getPurchaseTab() {
+	return purchaseTab;
   }
 }
 
