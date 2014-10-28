@@ -36,6 +36,11 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 	public void startNewPurchase() throws VerificationFailedException {
 		// XXX - Start new purchase
 	}
+	
+	public void addItemToWarehouse(StockItem item) throws VerificationFailedException 
+	{
+		model.getWarehouseTableModel().addItem(item);
+	}
 
 	public List<StockItem> loadWarehouseState() {
 		// XXX mock implementation

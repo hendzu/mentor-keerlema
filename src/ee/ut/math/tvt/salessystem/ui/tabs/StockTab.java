@@ -2,6 +2,7 @@ package ee.ut.math.tvt.salessystem.ui.tabs;
 
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
+import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 
 import java.awt.Color;
@@ -155,7 +156,13 @@ public class StockTab {
 					}
 					element ++;			
 				}
-				model.getWarehouseTableModel().addItem(new StockItem(id, name, desc, price, quantity));
+				try {
+				controller.addItemToWarehouse(
+						new StockItem(id, name, desc, price, quantity));
+				}
+				catch (VerificationFailedException ex) {
+					
+				}
 				addItem.setEnabled(true);
 				addItemFrame.dispose();
 			}

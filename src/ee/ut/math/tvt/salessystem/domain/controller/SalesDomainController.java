@@ -47,5 +47,6 @@ public interface SalesDomainController {
             throws VerificationFailedException;
 
     public void setModel(SalesSystemModel model);
+    public void addItemToWarehouse(StockItem item) throws VerificationFailedException;
     
 }

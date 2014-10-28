@@ -90,9 +90,11 @@ public class PurchaseItemPanel extends JPanel implements ItemListener{
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(6, 2));
         panel.setBorder(BorderFactory.createTitledBorder("Product"));
+        
+        items = new JComboBox<StockItem>();
         loadComboBox();
-        items = new JComboBox<StockItem>(stock);
         items.addItemListener(this);
+        
         // Initialize the textfields
         barCodeField = new JTextField();
         quantityField = new JTextField(1);
@@ -163,7 +165,9 @@ public class PurchaseItemPanel extends JPanel implements ItemListener{
         stock = new StockItem[model.getWarehouseTableModel().getTableRows().size()+1];
         stock[0] = new StockItem();
         for(int i = 1; i<model.getWarehouseTableModel().getTableRows().size()+1;i++){
-        	stock[i]=model.getWarehouseTableModel().getItemById(i);
+        	if (items != null) {
+            	items.addItem(stock[i]=model.getWarehouseTableModel().getItemById(i));
+            }	
         }
     }
     
@@ -243,6 +247,8 @@ public class PurchaseItemPanel extends JPanel implements ItemListener{
         barCodeField.setText("");
         quantityField.setText("1");
         priceField.setText("");
+        items.removeAllItems();
+        loadComboBox();
     }
 
     /*
