@@ -25,14 +25,12 @@ import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
  * labeled "History" in the menu).
  */
 public class HistoryTab {
-	private final SalesDomainController domainController;
 	private SalesSystemModel model;
 	private PurchaseInfoTableModel infoTable;
 
 	private JTable InfoTable;
 
     public HistoryTab(SalesDomainController domainController, SalesSystemModel model){
-    	this.domainController = domainController;
     	this.model = model;
     	this.infoTable = new PurchaseInfoTableModel();
     	

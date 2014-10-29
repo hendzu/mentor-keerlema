@@ -1,7 +1,5 @@
 package ee.ut.math.tvt.salessystem.ui.tabs;
 
-import ee.ut.math.tvt.salessystem.domain.data.OrderHistoryItem;
-import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.ui.PurchaseConfirmationUI;

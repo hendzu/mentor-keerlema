@@ -154,7 +154,7 @@ public class StockTab {
 						desc = field.getText();
 						break;
 					}
-					element ++;			
+					element++;			
 				}
 				try {
 				controller.addItemToWarehouse(

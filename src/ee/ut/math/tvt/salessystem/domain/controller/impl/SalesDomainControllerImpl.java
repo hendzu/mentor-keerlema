@@ -9,7 +9,6 @@ import ee.ut.math.tvt.salessystem.domain.data.OrderHistoryItem;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
-import ee.ut.math.tvt.salessystem.ui.model.StockTableModel;
 
 /**
  * Implementation of the sales domain controller.
