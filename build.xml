@@ -57,7 +57,7 @@
 		</sequential>
 	</macrodef>
 
-	<target name="build" depends="clean" description="lol">
+	<target name="build" description="lol">
 		<mkdir dir="${build.dir}" />
 		<mkdir dir="${build.classes.dir}" />
 		<mkdir dir="${build.resources.dir}" />
@@ -70,6 +70,7 @@
 	</target>
 
 	<target name="dist" depends="build" description="distribution">
+		<antcall target="revision" />
 		<mkdir dir="${dist.dir}" />
 		<jar destfile="${dist.dir}/${team.name}.jar">
 			<fileset dir="${build.classes.dir}" />
@@ -79,7 +80,6 @@
 				<attribute name="Main-class" value="${main-class}" />
 			</manifest>
 		</jar>
-		<antcall target="revision" />
 	</target>
 
 	<target name="revision">
