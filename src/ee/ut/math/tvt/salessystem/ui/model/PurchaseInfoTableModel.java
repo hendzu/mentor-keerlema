@@ -1,9 +1,10 @@
 package ee.ut.math.tvt.salessystem.ui.model;
 
+import javax.swing.JOptionPane;
+
 import org.apache.log4j.Logger;
 
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
-import ee.ut.math.tvt.salessystem.ui.SalesSystemUI;
 
 /**
  * Purchase history details model.
@@ -77,9 +78,10 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
     		rows.add(item);
     	}
     	if (quantity >= maxQuantity) {
-    		log.info("Running out of " + item.getName()	);
+    		String message = "Running out of " + item.getName();
+    		JOptionPane.showMessageDialog(null, message);
+    		log.info(message);
     	}
-    	
         log.debug("Added " + item.getName() + " quantity of " + item.getQuantity());
         fireTableDataChanged();
     }

@@ -5,9 +5,9 @@ import java.util.List;
 
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
+import ee.ut.math.tvt.salessystem.domain.data.OrderHistoryItem;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
-
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 import ee.ut.math.tvt.salessystem.ui.model.StockTableModel;
 
@@ -23,8 +23,19 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 		// Let's not assume we have checked and found out that the buyer is underaged and
 		// cannot buy chupa-chups
 		//throw new VerificationFailedException("Underaged!");
+		double sum= 0;
+		for(SoldItem item: goods){
+			sum += item.getSum();
+		}
+
+		model.getOrderHistoryTableModel().addItem(
+				new OrderHistoryItem(sum, goods));
 		
-		//StockTableModel warehouse = model.getWarehouseTableModel();
+		for (SoldItem item : goods){
+			model.getWarehouseTableModel().getItemById(item.getId()).setQuantity(
+					model.getWarehouseTableModel().getItemById(item.getId()).getQuantity() 
+					- item.getQuantity());
+		}
 		
 	}
 

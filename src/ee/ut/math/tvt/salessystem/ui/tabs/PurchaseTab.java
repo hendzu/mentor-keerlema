@@ -13,15 +13,13 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTable;
 
 import org.apache.log4j.Logger;
 
@@ -181,25 +179,18 @@ public class PurchaseTab {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
+					
 					if (panel.getChange() > 0)
-						throw new VerificationFailedException();
-					domainController
-							.submitCurrentPurchase(table.getTableRows());
-					model.getOrderHistoryTableModel().addItem(
-							new OrderHistoryItem(panel.getSum(),
-									model.getCurrentPurchaseTableModel().getTableRows()));
-					for(SoldItem item: table.getTableRows()){
-						model.getWarehouseTableModel().getItemById(item.getId()).setQuantity(
-								model.getWarehouseTableModel().getItemById(item.getId()).getQuantity() 
-								- item.getQuantity());
-					}
+						throw new VerificationFailedException("Payment amount inadequate.");
+					domainController.submitCurrentPurchase(table.getTableRows());
 					table.clear();
 					endSale();
 					log.info("Sale complete");
 
 				} 
-				//TODO: display error message to user in message box 
+				 
 				catch (VerificationFailedException e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage());
 					log.error(e1.getMessage());
 					unlockTab();
 				}
