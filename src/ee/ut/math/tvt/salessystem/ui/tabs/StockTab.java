@@ -4,6 +4,7 @@ import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
+import ee.ut.math.tvt.salessystem.ui.model.StockTableModel;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -17,16 +18,23 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.JTableHeader;
 
+import jdk.nashorn.internal.scripts.JO;
+
+import org.apache.log4j.Logger;
+
 
 public class StockTab {
 
 	private JButton addItem;
+	
+	private static final Logger log = Logger.getLogger(StockTab.class);
 
 	private SalesDomainController controller;
 	private SalesSystemModel model;
@@ -112,8 +120,10 @@ public class StockTab {
 			}
 		});
 		
+		
+		final String[] headers = model.getWarehouseTableModel().getHeaders();
 		final ArrayList<JTextField> fields = new ArrayList<JTextField>();
-		for (String header : model.getWarehouseTableModel().getHeaders())
+		for (String header : headers)
 		{
 			JLabel label = new JLabel(header);
 			addItemPanel.add(label, gc);
@@ -136,7 +146,11 @@ public class StockTab {
 				double price = 0.0;
 				int quantity = 0;
 				int element = 0;
-				for (JTextField field:fields){
+				int i = 0;
+				try
+				{
+					for (; i < fields.size(); i++){
+					JTextField field = fields.get(i);
 					switch(element){
 					case 0:
 						id = Long.parseLong(field.getText());
@@ -155,16 +169,25 @@ public class StockTab {
 						break;
 					}
 					element++;			
+					}
+					controller.addItemToWarehouse(
+							new StockItem(id, name, desc, price, quantity));
+					addItem.setEnabled(true);
+					addItemFrame.dispose();
 				}
-				try {
-				controller.addItemToWarehouse(
-						new StockItem(id, name, desc, price, quantity));
+				
+				catch (NumberFormatException nfe) {
+					String message = "Invalid input in: " + headers[i];
+					log.error(message);
+					JOptionPane.showMessageDialog(null, message);
 				}
+				
 				catch (VerificationFailedException ex) {
-					
+					log.error(ex.getMessage());
+					JOptionPane.showMessageDialog(null, ex.getMessage());
 				}
-				addItem.setEnabled(true);
-				addItemFrame.dispose();
+				
+				
 			}
 		});
 		

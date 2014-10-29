@@ -122,7 +122,7 @@ public class PurchaseItemPanel extends JPanel implements ItemListener{
                 fillDialogFields();
             }
         });*/
-
+        
         barCodeField.setEditable(false);
         priceField.setEditable(false);
 
