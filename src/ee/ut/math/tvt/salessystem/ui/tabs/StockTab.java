@@ -11,6 +11,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -133,7 +135,26 @@ public class StockTab {
 		JTextField field = new JTextField();
 		addItemPanel.add(field, gc);
 		fields.add(field);
-		
+		fields.get(3).addFocusListener(new FocusListener(){
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				try{
+				if(Integer.parseInt(fields.get(3).getText()) < 1){
+					fields.get(3).setText("1");
+				}
+				}catch(NumberFormatException nfe){
+					
+				}
+			}
+			
+		});
 		submit.addActionListener(new ActionListener() {	
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -172,6 +193,7 @@ public class StockTab {
 					addItem.setEnabled(true);
 					addItemFrame.dispose();
 				}
+				
 				
 				catch (NumberFormatException nfe) {
 					String message = "Invalid input in: " + headers[i];
