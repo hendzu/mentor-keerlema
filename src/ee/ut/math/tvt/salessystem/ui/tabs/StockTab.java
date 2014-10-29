@@ -175,6 +175,7 @@ public class StockTab {
 				
 				catch (NumberFormatException nfe) {
 					String message = "Invalid input in: " + headers[i];
+					fields.get(i).requestFocus();
 					log.error(message);
 					JOptionPane.showMessageDialog(null, message);
 				}

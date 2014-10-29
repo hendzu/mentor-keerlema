@@ -3,6 +3,7 @@ package ee.ut.math.tvt.salessystem.ui.panels;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
+import ee.ut.math.tvt.salessystem.ui.tabs.StockTab;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -20,10 +21,13 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+
+import org.apache.log4j.Logger;
 
 /**
  * Purchase pane + shopping cart table UI.
@@ -31,6 +35,7 @@ import javax.swing.JTextField;
 public class PurchaseItemPanel extends JPanel implements ItemListener{
 
     private static final long serialVersionUID = 1L;
+	private static final Logger log = Logger.getLogger(PurchaseItemPanel.class);
 
     // Text field on the dialogPane
     private JTextField barCodeField;
@@ -101,8 +106,15 @@ public class PurchaseItemPanel extends JPanel implements ItemListener{
 			
 			@Override
 			public void focusLost(FocusEvent e) {
-				if(Integer.parseInt(quantityField.getText()) < 1){
-					quantityField.setText("1");
+				try{
+					if(Integer.parseInt(quantityField.getText()) < 1){
+						quantityField.setText("1");
+					}
+				}catch(NumberFormatException nfe){
+					String message = "Invalid input in quantity";
+					quantityField.requestFocus();
+					log.error(message);
+					JOptionPane.showMessageDialog(null, message);
 				}
 			}
 			

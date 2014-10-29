@@ -2,17 +2,23 @@ package ee.ut.math.tvt.salessystem.ui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import org.apache.log4j.Logger;
+
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.ui.model.PurchaseInfoTableModel;
+import ee.ut.math.tvt.salessystem.ui.panels.PurchaseItemPanel;
 
 
 public class PurchaseConfirmationUI extends JFrame{
@@ -20,6 +26,8 @@ public class PurchaseConfirmationUI extends JFrame{
 	private JTextField totalSumField;
 	private JTextField paymentField;
 	private JTextField changeField;
+	
+	private static final Logger log = Logger.getLogger(PurchaseConfirmationUI.class);
 	
 	private JButton acceptPaymentButt;
 	private JButton cancelPaymentButt;
@@ -47,6 +55,28 @@ public class PurchaseConfirmationUI extends JFrame{
 		totalSumField = new JTextField(Double.toString(sum));
 		changeField = new JTextField(8);
 		paymentField = new JTextField(8);
+        
+		paymentField.addFocusListener(new FocusListener() {
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				try{
+					if(Integer.parseInt(paymentField.getText()) < 1){
+						paymentField.setText("1");
+					}
+				}catch(NumberFormatException nfe){
+					String message = "Invalid input in quantity";
+					paymentField.requestFocus();
+					log.error(message);
+					JOptionPane.showMessageDialog(null, message);
+				}
+				}
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+				
+			}});
 		
 		totalSumField.setEditable(false);
 		changeField.setEditable(false);
