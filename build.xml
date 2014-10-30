@@ -19,11 +19,21 @@
 	<property name="dist.dir" location="${build.dir}/jar" />
 	<property name="main-class" value="ee.ut.math.tvt.mentor_keerlema.Intro" />
 	<property file="${basedir}/resources/application.properties" />
+    <property name="lib.hibernate.dir"   value="${basedir}/lib/hibernate"/>
+	
+    <!-- database variables -->
+    <property name="data.dir"            value="${basedir}/data"/>
+    <property name="db.file"             value="${data.dir}/POSdb"/>
+    <property name="db.alias"            value="POS"/>
+    <property name="db.url"              value="jdbc:hsqldb:hsql://localhost/POS"/>
 
 	<path id="compile.classpath">
 		<fileset dir="./lib">
 			<include name="*.jar" />
 		</fileset>
+        <fileset dir="${lib.hibernate.dir}">
+             <include name="*.jar"/>
+         </fileset>
 	</path>
 
 	<path id="test.classpath">
@@ -31,6 +41,9 @@
 		<fileset dir="./lib">
 			<include name="*.jar" />
 		</fileset>
+        <fileset dir="${lib.hibernate.dir}">
+             <include name="*.jar"/>
+         </fileset>
 		<dirset dir="resources" />
 		<pathelement path="resources" />
 	</path>
@@ -63,6 +76,8 @@
 		<mkdir dir="${build.resources.dir}" />
 		<javac srcdir="${src}" destdir="${build.classes.dir}" debug="true" debuglevel="lines,vars,source" encoding="utf-8" compiler="modern" target="1.7" source="1.7" includeantruntime="false">
 			<classpath refid="compile.classpath" />
+            <compilerarg value="-Xlint:unchecked" />
+            <compilerarg value="-Xlint:deprecation" />
 		</javac>
 		<copy todir="${build.resources.dir}">
 			<fileset dir="./resources" />
@@ -165,6 +180,26 @@
     		</args>
     	</git>
             
+    </target>
+	
+    <target name="dbmanager" description="Start the HSQLDB manager">
+        <java
+            classname="org.hsqldb.util.DatabaseManagerSwing"
+            classpathref="test.classpath"
+            fork="yes"
+        >
+            <arg line="--user sa --url ${db.url}" />
+        </java>
+    </target>
+
+    <target name="startdb" description="Start the HSQLDB with the default params">
+        <java
+            classname="org.hsqldb.Server"
+            classpathref="test.classpath"
+            fork="yes"
+        >
+            <arg line="-database.0 '${db.file}' -dbname.0 '${db.alias}'" /> 
+        </java>
     </target>
 
 
