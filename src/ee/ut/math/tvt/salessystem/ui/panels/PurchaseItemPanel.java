@@ -112,6 +112,7 @@ public class PurchaseItemPanel extends JPanel implements ItemListener{
 					}
 				}catch(NumberFormatException nfe){
 					String message = "Invalid input in quantity";
+					quantityField.setText("1");
 					quantityField.requestFocus();
 					log.error(message);
 					JOptionPane.showMessageDialog(null, message);
