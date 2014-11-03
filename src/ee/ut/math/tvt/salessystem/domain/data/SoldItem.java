@@ -1,10 +1,17 @@
 package ee.ut.math.tvt.salessystem.domain.data;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 
@@ -20,16 +27,17 @@ public class SoldItem implements Cloneable, DisplayableItem {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 	
-	
-    private StockItem stockItem;
-    
-    @Column(name = "name")
+	@OneToOne
+	@JoinColumn(name="id")
+	private StockItem stockItem;
+   
+    @Column(name = "NAME")
     private String name;
     
-    @Column(name = "quantity")
+    @Column(name = "QUANTITY")
     private Integer quantity;
     
-    @Column(name= "itemprice")
+    @Column(name= "ITEMPRICE")
     private double price;
     
     public SoldItem(StockItem stockItem, int quantity) {

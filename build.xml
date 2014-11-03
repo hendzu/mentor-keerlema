@@ -38,6 +38,7 @@
 
 	<path id="test.classpath">
 		<pathelement location="${build.classes.dir}" />
+		<pathelement location="${basedir}/conf"/>
 		<fileset dir="./lib">
 			<include name="*.jar" />
 		</fileset>
