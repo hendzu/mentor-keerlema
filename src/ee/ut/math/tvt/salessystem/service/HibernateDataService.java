@@ -14,14 +14,14 @@ public class HibernateDataService {
 
 	private Session session = HibernateUtil.currentSession();
 
-/*	public List<StockItem> getStockitem() {
-		List<StockItem> result = session.createQuery("from Stockitem").list();
-		return result;
-	}*/
-
 	public List<StockItem> getStockitem() {
-		return Collections.checkedList(session.createQuery("from Stockitem").list(), StockItem.class);
+		List<StockItem> result = session.createQuery("select * from Stockitem").list();
+		return result;
 	}
+
+//	public List<StockItem> getStockitem() {
+//		return Collections.checkedList(session.createQuery("from Stockitem").list(), StockItem.class);
+//	}
 
 	public List<SoldItem> getSoldItem() {
 		List<SoldItem> result = session.createQuery("from Solditem").list();
