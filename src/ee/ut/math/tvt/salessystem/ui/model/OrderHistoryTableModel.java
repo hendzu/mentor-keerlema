@@ -9,17 +9,15 @@ public class OrderHistoryTableModel extends SalesSystemTableModel<OrderHistoryIt
 	private static final long serialVersionUID = 1L;
 
 	public OrderHistoryTableModel() {
-		super(new String[] { "Date", "Time", "Price"});
+		super(new String[] { "Date:Time", "Price"});
 	}
 
 	@Override
 	protected Object getColumnValue(OrderHistoryItem item, int columnIndex) {
 		switch (columnIndex) {
 		case 0:
-			return item.getDate();
-		case 1:
 			return item.getTime();
-		case 2:
+		case 1:
 			return item.getPrice();
 		}
 		throw new IllegalArgumentException("Column index out of range");
@@ -34,7 +32,6 @@ public class OrderHistoryTableModel extends SalesSystemTableModel<OrderHistoryIt
 		buffer.append("\n");
 		for (final OrderHistoryItem item : rows) {
 			buffer.append(item.getId() + "\t");
-			buffer.append(item.getDate() + "\t");
 			buffer.append(item.getTime() + "\t");
 			buffer.append(item.getPrice() + "\t");
 			buffer.append("\n");
@@ -45,7 +42,7 @@ public class OrderHistoryTableModel extends SalesSystemTableModel<OrderHistoryIt
 	
 	public void addItem(final OrderHistoryItem item){
 		rows.add(item);
-        log.debug("Added order Date: " + item.getDate() + " Time: " + item.getTime() + " Price: " + item.getPrice());
+        log.debug("Added order Time: " + item.getTime() + " Price: " + item.getPrice());
         fireTableDataChanged();
 	}
 

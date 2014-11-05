@@ -22,7 +22,6 @@ public class StockItem implements Cloneable, DisplayableItem {
 	@Column(name="ID")
     private Long id;
 	
-
 	@OneToMany(mappedBy ="stockItem")
 	private Set<SoldItem> solditems;
 	

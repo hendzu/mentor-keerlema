@@ -59,9 +59,6 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 		HibernateDataService service = new HibernateDataService();
 		List<StockItem> dataset = new ArrayList<StockItem>();
 		dataset = service.getStockitem();
-		if(dataset.size() == 0){
-			dataset = new ArrayList<StockItem>();
-		}
 
 		StockItem chips = new StockItem(1l, "Lays chips", "Potato chips", 11.0, 5);
 		StockItem chupaChups = new StockItem(2l, "Chupa-chups", "Sweets", 8.0, 8);
@@ -75,6 +72,17 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 		
 		return dataset;
 	}
+	
+	public List<OrderHistoryItem> loadHistoryState() {
+		// XXX mock implementation
+		HibernateDataService service = new HibernateDataService();
+		List<OrderHistoryItem> dataset = new ArrayList<OrderHistoryItem>();
+		dataset = service.getSpecialities();
+		
+		return dataset;
+	}
+	
+	
 
 	@Override
 	public void setModel(SalesSystemModel model) {
