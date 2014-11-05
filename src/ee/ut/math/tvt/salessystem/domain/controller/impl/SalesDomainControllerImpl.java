@@ -72,6 +72,17 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 		
 		return dataset;
 	}
+	
+	public List<OrderHistoryItem> loadHistoryState() {
+		// XXX mock implementation
+		HibernateDataService service = new HibernateDataService();
+		List<OrderHistoryItem> dataset = new ArrayList<OrderHistoryItem>();
+		dataset = service.getSpecialities();
+		
+		return dataset;
+	}
+	
+	
 
 	@Override
 	public void setModel(SalesSystemModel model) {

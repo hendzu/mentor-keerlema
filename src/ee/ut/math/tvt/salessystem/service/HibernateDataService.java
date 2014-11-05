@@ -30,7 +30,7 @@ public class HibernateDataService {
 	}
 
 	public List<OrderHistoryItem> getSpecialities() {
-		List<OrderHistoryItem> result = session.createQuery("from Sale").list();
+		List<OrderHistoryItem> result = session.createQuery("from OrderHistoryItem").list();
 		return result;
 	}
 
