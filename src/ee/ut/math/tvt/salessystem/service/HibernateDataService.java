@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 
+import ee.ut.math.tvt.salessystem.domain.data.OrderHistoryItem;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.util.HibernateUtil;
@@ -24,13 +25,13 @@ public class HibernateDataService {
 //	}
 
 	public List<SoldItem> getSoldItem() {
-		List<SoldItem> result = session.createQuery("from Solditem").list();
+		List<SoldItem> result = session.createQuery("from SoldItem").list();
 		return result;
 	}
-/*
-	public List<Speciality> getSpecialities() {
-		List<Speciality> result = session.createQuery("from Speciality").list();
+
+	public List<OrderHistoryItem> getSpecialities() {
+		List<OrderHistoryItem> result = session.createQuery("from Sale").list();
 		return result;
-	}*/
+	}
 
 }

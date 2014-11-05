@@ -59,9 +59,6 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 		HibernateDataService service = new HibernateDataService();
 		List<StockItem> dataset = new ArrayList<StockItem>();
 		dataset = service.getStockitem();
-		if(dataset.size() == 0){
-			dataset = new ArrayList<StockItem>();
-		}
 
 		StockItem chips = new StockItem(1l, "Lays chips", "Potato chips", 11.0, 5);
 		StockItem chupaChups = new StockItem(2l, "Chupa-chups", "Sweets", 8.0, 8);

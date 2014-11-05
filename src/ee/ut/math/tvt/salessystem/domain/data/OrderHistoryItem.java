@@ -1,26 +1,36 @@
 package ee.ut.math.tvt.salessystem.domain.data;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="SALE")
 public class OrderHistoryItem implements DisplayableItem {
-	private String date;
-	private String time;
-	private double price;
-	private List<SoldItem> items;
 	
+	@Id
+	private Long id;
+	@Column(name="DATE")
+	private Timestamp time;
+	@Column(name="PRICE")
+	private double price;
+	
+	@OneToMany(mappedBy ="history")
+	private List<SoldItem> items;
 	
 	public OrderHistoryItem(double price, List<SoldItem> list) {
 		this.items = list;
 		this.price = price;
-		DateFormat DateFormat = new SimpleDateFormat("yyyy:MM:dd");
-		DateFormat TimeFormat = new SimpleDateFormat("hh:mm:ss");
-		
-		Date date = new Date();
-		this.date = DateFormat.format(date);
-		this.time = TimeFormat.format(date);
+		Calendar calendar = Calendar.getInstance();
+		Date now = calendar.getTime();
+		this.time = new Timestamp(now.getTime());
 	}
 
 	public List<SoldItem> getItems() {
@@ -31,18 +41,10 @@ public class OrderHistoryItem implements DisplayableItem {
 		this.items = items;
 	}
 
-	public String getDate() {
-		return date;
-	}
-	public void setDate(String date) {
-		this.date = date;
-	}
-	public String getTime() {
+	public Timestamp getTime() {
 		return time;
 	}
-	public void setTime(String time) {
-		this.time = time;
-	}
+	
 	public double getPrice() {
 		return price;
 	}
