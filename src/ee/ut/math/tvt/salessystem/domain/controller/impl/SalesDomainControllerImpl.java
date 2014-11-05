@@ -58,9 +58,9 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 		// XXX mock implementation
 		HibernateDataService service = new HibernateDataService();
 		List<StockItem> dataset = new ArrayList<StockItem>();
-		dataset = service.getStockitem();
+		dataset.addAll(service.getStockitem());
 
-		StockItem chips = new StockItem(1l, "Lays chips", "Potato chips", 11.0, 5);
+/*		StockItem chips = new StockItem(1l, "Lays chips", "Potato chips", 11.0, 5);
 		StockItem chupaChups = new StockItem(2l, "Chupa-chups", "Sweets", 8.0, 8);
 	    StockItem frankfurters = new StockItem(3l, "Frankfurters", "Beer sauseges", 15.0, 12);
 	    StockItem beer = new StockItem(4l, "Free Beer", "Student's delight", 0.0, 100);
@@ -69,6 +69,7 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 		dataset.add(chupaChups);
 		dataset.add(frankfurters);
 		dataset.add(beer);
+		System.out.println(dataset.get(0).getId());*/
 		
 		return dataset;
 	}
