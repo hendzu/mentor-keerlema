@@ -119,6 +119,7 @@
 		<jvmarg value="-Xdebug" />
 		<jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044" />
 		</java>
+		<antcall target="stopdb" />
 	</target>
 
 	<target name="runc" depends="build" description="Run the application (console)">
@@ -202,6 +203,13 @@
             <arg line="-database.0 '${db.file}' -dbname.0 '${db.alias}'" /> 
         </java>
     </target>
-
-
+	
+	<target name="stopdb">
+		<sql
+		    classpathref="test.classpath"
+		    driver="org.hsqldb.jdbcDriver"
+		    url="jdbc:hsqldb:hsql://localhost/POS"
+		    userid="sa" password=""
+		    autocommit="true">SHUTDOWN</sql>
+	</target>
 </project>
