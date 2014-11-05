@@ -15,7 +15,7 @@ public class HibernateDataService {
 	private Session session = HibernateUtil.currentSession();
 
 	public List<StockItem> getStockitem() {
-		List<StockItem> result = session.createQuery("select * from Stockitem").list();
+		List<StockItem> result = session.createQuery("from StockItem").list();
 		return result;
 	}
 
