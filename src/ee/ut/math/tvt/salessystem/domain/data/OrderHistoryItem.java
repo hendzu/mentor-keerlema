@@ -7,15 +7,18 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="SALE")
-public class OrderHistoryItem implements DisplayableItem {
+public class OrderHistoryItem implements Cloneable, DisplayableItem {
 	
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	@Column(name="DATE")
 	private Timestamp time;
@@ -25,6 +28,9 @@ public class OrderHistoryItem implements DisplayableItem {
 	@OneToMany(mappedBy ="history")
 	private List<SoldItem> items;
 	
+	public OrderHistoryItem() {
+	}
+
 	public OrderHistoryItem(double price, List<SoldItem> list) {
 		this.items = list;
 		this.price = price;
@@ -40,27 +46,30 @@ public class OrderHistoryItem implements DisplayableItem {
 	public void setItems(List<SoldItem> items) {
 		this.items = items;
 	}
+	
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public Timestamp getTime() {
 		return time;
 	}
-	
+
+	public void setTime(Timestamp time) {
+		this.time = time;
+	}
+
 	public double getPrice() {
 		return price;
 	}
 	public void setPrice(double price) {
 		this.price = price;
 	}
-	public void setId(long id) {
-		Id = id;
-	}
-	private long Id;
 	
-	@Override
 	public Long getId() {
-		return Id;
+		return id;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		return ((OrderHistoryItem)obj).getId() == this.getId();
