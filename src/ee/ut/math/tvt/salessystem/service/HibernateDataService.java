@@ -13,6 +13,7 @@ import ee.ut.math.tvt.salessystem.util.HibernateUtil;
 public class HibernateDataService {
 
 	private Session session = HibernateUtil.currentSession();
+	
 
 	public List<StockItem> getStockitem() {
 		List<StockItem> result = session.createQuery("from StockItem").list();
