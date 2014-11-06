@@ -1,6 +1,5 @@
 package ee.ut.math.tvt.salessystem.service;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -20,16 +19,12 @@ public class HibernateDataService {
 		return result;
 	}
 
-//	public List<StockItem> getStockitem() {
-//		return Collections.checkedList(session.createQuery("from Stockitem").list(), StockItem.class);
-//	}
-
 	public List<SoldItem> getSoldItem() {
 		List<SoldItem> result = session.createQuery("from SoldItem").list();
 		return result;
 	}
 
-	public List<OrderHistoryItem> getSpecialities() {
+	public List<OrderHistoryItem> getOrderHistoryItem() {
 		List<OrderHistoryItem> result = session.createQuery("from OrderHistoryItem").list();
 		return result;
 	}

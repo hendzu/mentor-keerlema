@@ -78,7 +78,7 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 		// XXX mock implementation
 		HibernateDataService service = new HibernateDataService();
 		List<OrderHistoryItem> dataset = new ArrayList<OrderHistoryItem>();
-		dataset = service.getSpecialities();
+		dataset = service.getOrderHistoryItem();
 		
 		return dataset;
 	}
