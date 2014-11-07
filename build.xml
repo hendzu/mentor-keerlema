@@ -211,4 +211,32 @@
 		    userid="sa" password=""
 		    autocommit="true">SHUTDOWN</sql>
 	</target>
+	<target name="mostpopularsql">
+				<sql
+					print="yes"
+				    classpathref="test.classpath"
+				    driver="org.hsqldb.jdbcDriver"
+				    url="jdbc:hsqldb:hsql://localhost/POS"
+				    userid="sa" password="">
+					SELECT TOP 1 name,SUM(quantity) as total_quantity,ITEMPRICE,SUM(quantity)*ITEMPRICE as total_price
+					FROM SOLDITEM
+					GROUP BY name,ITEMPRICE
+					ORDER BY total_quantity DESC
+				</sql>
+			</target>
+	<target name="mostincomesql">
+					<sql
+						print="yes"
+					    classpathref="test.classpath"
+					    driver="org.hsqldb.jdbcDriver"
+					    url="jdbc:hsqldb:hsql://localhost/POS"
+					    userid="sa" password="">
+						SELECT TOP 1 CAST(DAYOFMONTH(DATE) as VARCHAR) +'.'
+						+CAST(MONTH(DATE) as VARCHAR)+'.'
+						+YEAR(DATE) as day
+						FROM SALE
+						GROUP BY day
+						ORDER BY SUM(price) DESC
+					</sql>
+				</target>
 </project>
