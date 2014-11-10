@@ -130,11 +130,14 @@ public class StockTab {
 			addItemPanel.add(field, gc);
 			fields.add(field);
 		}
+		fields.get(0).setText(Integer.toString(model.getWarehouseTableModel().getTableRows().size()+1));
+		fields.get(0).setEditable(false);
 		JLabel label = new JLabel("Description");
 		addItemPanel.add(label, gc);
 		JTextField field = new JTextField();
 		addItemPanel.add(field, gc);
 		fields.add(field);
+		fields.get(1).requestFocus();
 		fields.get(3).addFocusListener(new FocusListener(){
 
 			@Override
