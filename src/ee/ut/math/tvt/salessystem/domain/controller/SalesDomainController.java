@@ -6,6 +6,7 @@ import ee.ut.math.tvt.salessystem.domain.data.OrderHistoryItem;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
+import ee.ut.math.tvt.salessystem.service.HibernateDataService;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 
 /**
@@ -49,6 +50,7 @@ public interface SalesDomainController {
             throws VerificationFailedException;
 
     public void setModel(SalesSystemModel model);
+    public void setService(HibernateDataService service);
     public void addItemToWarehouse(StockItem item) throws VerificationFailedException;
     public void endSession();
     

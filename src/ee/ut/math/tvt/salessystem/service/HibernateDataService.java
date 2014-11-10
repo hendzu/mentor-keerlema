@@ -14,10 +14,28 @@ public class HibernateDataService {
 
 	private Session session = HibernateUtil.currentSession();
 	
-
+	public<T> void addItem(T item)
+	{
+		session.beginTransaction();
+		session.save(item);
+		session.getTransaction().commit();
+	}
+	
+	public<T> void updateItem(T item)
+	{
+		session.beginTransaction();
+		session.update(item);
+		session.getTransaction().commit();
+	}
+	
 	public List<StockItem> getStockitem() {
 		List<StockItem> result = session.createQuery("from StockItem").list();
 		return result;
+	}
+	
+	public StockItem getStockItem(Long id)
+	{
+		return (StockItem)session.get(StockItem.class, id);
 	}
 
 	public List<SoldItem> getSoldItem() {

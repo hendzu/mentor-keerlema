@@ -3,6 +3,8 @@ package ee.ut.math.tvt.salessystem.domain.controller.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.domain.data.OrderHistoryItem;
@@ -17,25 +19,29 @@ import ee.ut.math.tvt.salessystem.util.HibernateUtil;
  */
 public class SalesDomainControllerImpl implements SalesDomainController {
 	
+	private Logger logger = Logger.getLogger(SalesDomainControllerImpl.class);
 	private SalesSystemModel model; 
-	
+	private HibernateDataService service;
+
 	public void submitCurrentPurchase(List<SoldItem> goods) throws VerificationFailedException {
 		
+
 		// Let's not assume we have checked and found out that the buyer is underaged and
 		// cannot buy chupa-chups
 		//throw new VerificationFailedException("Underaged!");
-		double sum= 0;
+		double sum = 0;
 		for(SoldItem item: goods){
 			sum += item.getSum();
 		}
 
-		model.getOrderHistoryTableModel().addItem(
-				new OrderHistoryItem(sum, goods));
+		OrderHistoryItem historyItem = new OrderHistoryItem(sum, goods);
+		service.addItem(historyItem);
+		model.getOrderHistoryTableModel().addItem(historyItem);
 		
 		for (SoldItem item : goods){
-			model.getWarehouseTableModel().getItemById(item.getId()).setQuantity(
-					model.getWarehouseTableModel().getItemById(item.getId()).getQuantity() 
-					- item.getQuantity());
+			StockItem warehouseItem = model.getWarehouseTableModel().getItemById(item.getId());
+			warehouseItem.setQuantity(warehouseItem.getQuantity() - item.getQuantity());
+			service.updateItem(warehouseItem);
 		}
 		
 	}
@@ -51,12 +57,28 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 	
 	public void addItemToWarehouse(StockItem item) throws VerificationFailedException 
 	{
-		model.getWarehouseTableModel().addItem(item);
+		StockItem existingItem = service.getStockItem(item.getId());
+		if (existingItem == null)
+		{
+			service.addItem(item);
+			model.getWarehouseTableModel().addItem(item);
+			logger.debug(item + " added to stock table.");
+		}
+		else
+		{
+			int addQuantity = item.getQuantity();
+			existingItem.setQuantity(existingItem.getQuantity() + addQuantity);
+			service.updateItem(existingItem);
+			model.getWarehouseTableModel().fireTableDataChanged();
+			logger.debug(item.getName() + "'s quantity increased by " + addQuantity);			
+		}
+		
+		
+		//model.getWarehouseTableModel().addItem(item);
 	}
 
-	public List<StockItem> loadWarehouseState() {
-		// XXX mock implementation
-		HibernateDataService service = new HibernateDataService();
+	public List<StockItem> loadWarehouseState() 
+	{
 		List<StockItem> dataset = new ArrayList<StockItem>();
 		dataset.addAll(service.getStockitem());
 
@@ -75,26 +97,24 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 	}
 	
 	public List<OrderHistoryItem> loadHistoryState() {
-		// XXX mock implementation
-		HibernateDataService service = new HibernateDataService();
 		List<OrderHistoryItem> dataset = new ArrayList<OrderHistoryItem>();
 		dataset = service.getOrderHistoryItem();
 		
 		return dataset;
 	}
 	
-	
-
 	@Override
 	public void setModel(SalesSystemModel model) {
 		this.model = model;
+	}
+	
+	@Override
+	public void setService(HibernateDataService service) {
+		this.service = service;
 	}
 
 	@Override
 	public void endSession() {
 		HibernateUtil.closeSession();
-		
 	}
-	
-	
 }

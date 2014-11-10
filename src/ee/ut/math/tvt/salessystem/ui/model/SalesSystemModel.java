@@ -1,6 +1,7 @@
 	package ee.ut.math.tvt.salessystem.ui.model;
 
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
+import ee.ut.math.tvt.salessystem.service.HibernateDataService;
 
 /**
  * Main model. Holds all the other models.
@@ -24,6 +25,7 @@ public class SalesSystemModel {
     public SalesSystemModel(SalesDomainController domainController) {
         this.domainController = domainController;
         this.domainController.setModel(this);
+        this.domainController.setService(new HibernateDataService());
         
         warehouseTableModel = new StockTableModel();
         currentPurchaseTableModel = new PurchaseInfoTableModel();

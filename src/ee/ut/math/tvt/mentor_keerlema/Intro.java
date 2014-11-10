@@ -16,7 +16,7 @@ public class Intro {
 	public static void main(String[] args) {
 		final SalesDomainController domainController = new SalesDomainControllerImpl();
 		if (args.length == 1 && args[0].equals(MODE)) {
-			log.debug("MOde: " + MODE);		
+			log.debug("Mode: " + MODE);		
 			ConsoleUI cui  = new ConsoleUI(domainController);
 			cui.run();
 			
