@@ -23,6 +23,12 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 	private SalesSystemModel model; 
 	private HibernateDataService service;
 
+	
+	public SalesDomainControllerImpl(HibernateDataService service)
+	{
+		this.service = service;
+	}
+	
 	public void submitCurrentPurchase(List<SoldItem> goods) throws VerificationFailedException {
 		
 
@@ -79,6 +85,7 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 
 	public List<StockItem> loadWarehouseState() 
 	{
+		
 		List<StockItem> dataset = new ArrayList<StockItem>();
 		dataset.addAll(service.getStockitem());
 
@@ -106,11 +113,6 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 	@Override
 	public void setModel(SalesSystemModel model) {
 		this.model = model;
-	}
-	
-	@Override
-	public void setService(HibernateDataService service) {
-		this.service = service;
 	}
 
 	@Override

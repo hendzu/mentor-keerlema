@@ -25,7 +25,6 @@ public class SalesSystemModel {
     public SalesSystemModel(SalesDomainController domainController) {
         this.domainController = domainController;
         this.domainController.setModel(this);
-        this.domainController.setService(new HibernateDataService());
         
         warehouseTableModel = new StockTableModel();
         currentPurchaseTableModel = new PurchaseInfoTableModel();
