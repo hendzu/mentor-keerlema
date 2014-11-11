@@ -75,6 +75,7 @@
 		<mkdir dir="${build.dir}" />
 		<mkdir dir="${build.classes.dir}" />
 		<mkdir dir="${build.resources.dir}" />
+		<mkdir dir="${build.dir}/conf" />
 		<javac srcdir="${src}" destdir="${build.classes.dir}" debug="true" debuglevel="lines,vars,source" encoding="utf-8" compiler="modern" target="1.7" source="1.7" includeantruntime="false">
 			<classpath refid="compile.classpath" />
             <compilerarg value="-Xlint:unchecked" />
@@ -82,6 +83,9 @@
 		</javac>
 		<copy todir="${build.resources.dir}">
 			<fileset dir="./resources" />
+		</copy>
+		<copy todir="${build.dir}/conf">
+			<fileset dir="./conf" />
 		</copy>
 	</target>
 
@@ -91,6 +95,7 @@
 		<jar destfile="${dist.dir}/${team.name}.jar">
 			<fileset dir="${build.classes.dir}" />
 			<fileset dir="${build.resources.dir}/" />
+			<fileset dir="${build.dir}/conf" />
 			<zipgroupfileset dir="./lib" includes="**/*.jar" />
 			<manifest>
 				<attribute name="Main-class" value="${main-class}" />
