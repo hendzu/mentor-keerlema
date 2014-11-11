@@ -63,24 +63,27 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 	
 	public void addItemToWarehouse(StockItem item) throws VerificationFailedException 
 	{
-		StockItem existingItem = service.getStockItem(item.getId());
-		if (existingItem == null)
-		{
-			service.addItem(item);
-			model.getWarehouseTableModel().addItem(item);
-			logger.debug(item + " added to stock table.");
-		}
-		else
-		{
-			int addQuantity = item.getQuantity();
-			existingItem.setQuantity(existingItem.getQuantity() + addQuantity);
-			service.updateItem(existingItem);
-			model.getWarehouseTableModel().fireTableDataChanged();
-			logger.debug(item.getName() + "'s quantity increased by " + addQuantity);			
-		}
+		
+		service.addItem(item);
+		model.getWarehouseTableModel().addItem(item);
+		logger.debug(item + " added to stock table.");
+		
 		
 		
 		//model.getWarehouseTableModel().addItem(item);
+	}
+	public void editItemInWarehouse(StockItem item) throws VerificationFailedException{
+		
+		StockItem existingItem = service.getStockItem(item.getId());
+		int addQuantity = item.getQuantity();
+		existingItem.setDescription(item.getDescription());
+		existingItem.setName(item.getName());
+		existingItem.setPrice(item.getPrice());
+		existingItem.setQuantity(existingItem.getQuantity() + addQuantity);
+		service.updateItem(existingItem);
+		model.getWarehouseTableModel().fireTableDataChanged();
+		logger.debug(item.getName() + "'s quantity increased by " + addQuantity);			
+		
 	}
 
 	public List<StockItem> loadWarehouseState() 
