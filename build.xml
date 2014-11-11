@@ -97,6 +97,7 @@
 			<fileset dir="${build.resources.dir}/" />
 			<fileset dir="${build.dir}/conf" />
 			<zipgroupfileset dir="./lib" includes="**/*.jar" />
+			<zipgroupfileset dir="./data" includes="**/*.script/*.properties" />
 			<manifest>
 				<attribute name="Main-class" value="${main-class}" />
 			</manifest>
