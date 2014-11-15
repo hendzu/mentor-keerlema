@@ -1,6 +1,7 @@
 package ee.ut.math.tvt.salessystem.domain.data;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -29,6 +30,7 @@ public class OrderHistoryItem implements Cloneable, DisplayableItem {
 	private List<SoldItem> items;
 	
 	public OrderHistoryItem() {
+		items = new ArrayList<SoldItem>();
 	}
 
 	public OrderHistoryItem(double price, List<SoldItem> list) {
@@ -53,6 +55,23 @@ public class OrderHistoryItem implements Cloneable, DisplayableItem {
 
 	public Timestamp getTime() {
 		return time;
+	}
+	
+	public void addSoldItem(SoldItem item){
+		if(item == null){
+			throw new NullPointerException();
+		}
+		else{
+			items.add(item);
+		}
+	}
+	
+	public double getSum(){
+		double sum = 0;
+		for(SoldItem item: items){
+			sum += item.getSum();
+		}
+		return sum;
 	}
 
 	public void setTime(Timestamp time) {

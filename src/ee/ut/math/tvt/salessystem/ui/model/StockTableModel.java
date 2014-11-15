@@ -32,6 +32,20 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 		}
 		throw new IllegalArgumentException("Column index out of range");
 	}
+	
+	public boolean isUnique(StockItem item){
+		for(StockItem Item: rows){
+			if(Item.getName().equals(item.getName()))
+				return false;
+		}
+		return true;
+	}
+	
+	public boolean inStock(StockItem item, int quantity){
+		if(item.getQuantity() >= quantity)
+			return true;	
+		return false;
+	}
 
 	/**
 	 * Add new stock item to table. If there already is a stock item with

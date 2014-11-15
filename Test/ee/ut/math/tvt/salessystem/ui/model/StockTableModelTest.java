@@ -19,10 +19,16 @@ public class StockTableModelTest {
 		item = new StockItem(5L, "Komm", "Maitsev", 5.0, 5);
 	}
 	@Test
-    public void testValidateNameUniqueness(){};
+    public void testValidateNameUniqueness(){
+		table.addItem(item);
+		assertEquals(table.isUnique(item), false);
+	};
+    
+    
     @Test
     public void testHasEnoughInStock(){
-    	
+    	table.addItem(item);
+    	assertEquals(table.inStock(item, 3), true);
     };
     
     @Test
