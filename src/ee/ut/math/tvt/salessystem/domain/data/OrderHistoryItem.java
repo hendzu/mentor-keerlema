@@ -35,7 +35,7 @@ public class OrderHistoryItem implements Cloneable, DisplayableItem {
 
 	public OrderHistoryItem(double price, List<SoldItem> list) {
 		this.items = list;
-		this.price = price;
+		this.price = getSum();
 		Calendar calendar = Calendar.getInstance();
 		Date now = calendar.getTime();
 		this.time = new Timestamp(now.getTime());
@@ -79,7 +79,7 @@ public class OrderHistoryItem implements Cloneable, DisplayableItem {
 	}
 
 	public double getPrice() {
-		return price;
+		return getSum();
 	}
 	public void setPrice(double price) {
 		this.price = price;

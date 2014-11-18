@@ -41,6 +41,9 @@ public class OrderHistoryTableModel extends SalesSystemTableModel<OrderHistoryIt
 	}
 	
 	public void addItem(final OrderHistoryItem item){
+		if(item.getItems().size() == 0){
+			throw new NullPointerException();
+		}
 		rows.add(item);
         log.debug("Added order Time: " + item.getTime() + " Price: " + item.getPrice());
         fireTableDataChanged();
