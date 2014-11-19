@@ -9,38 +9,38 @@ import ee.ut.math.tvt.salessystem.domain.data.OrderHistoryItem;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 
-public class OrderHistoryTableModelTest {
-	
-	private OrderHistoryTableModel table;
-	private OrderHistoryItem item;
+public class PurchaseInfoTableModelTest {
+	private PurchaseInfoTableModel table;
 	private SoldItem solditem;
+	private SoldItem solditem2;
 	private StockItem stockitem;
 	
 	@Before
 	public void setUp(){
-		table = new OrderHistoryTableModel();
-		item = new OrderHistoryItem();
-		stockitem = new StockItem(5L, "Komm", "Maitsev", 5.0);
+		table = new PurchaseInfoTableModel();
+		stockitem = new StockItem(5L, "Komm", "Maitsev", 5.0,5);
 		solditem = new SoldItem();
 	}
 	
 	@Test
 	public void testgetColumnIfPresent(){
-		solditem.setStockItem(stockitem);
-		solditem.setQuantity(2);
-		item.addSoldItem(solditem);
-		table.addItem(item);
-		assertEquals(10.0, (Double)table.getColumnValue(item, 1), 0.0001);
+		solditem = new SoldItem(stockitem, 2);
+		solditem2 = new SoldItem(stockitem, 4);
+		table.addItem(solditem);
+		System.out.println(table.getColumnValue(solditem, 4));
+		assertEquals(10.0, (Double)table.getColumnValue(solditem, 4),0.0001);
+		table.addItem(solditem2);
+		assertEquals(25.0, (Double)table.getColumnValue(solditem, 4),0.0001);
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
 	public void testgetColumnNotExcisting(){
-		table.getColumnValue(item, 3);
+		table.getColumnValue(solditem, 8);
 	}
 	
 	@Test(expected=NullPointerException.class)
 	public void testaddItem(){
-		item = null;
-		table.addItem(item);
+		solditem = null;
+		table.addItem(solditem);
 	}
 }
