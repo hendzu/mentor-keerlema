@@ -65,7 +65,8 @@ public class HistoryTab {
                 if (!lsm.isSelectionEmpty()) {
                     int selectedRow = lsm.getMinSelectionIndex();
                     Sale sale = model.getPurchaseHistoryTableModel().getRow(selectedRow);
-                    historyDetailsTableModel.showSale(sale);
+                    historyDetailsTableModel.setSale(sale);
+                    //historyDetailsTableModel.showSale(sale);
                 }
             }
         });

@@ -4,23 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import javax.swing.table.AbstractTableModel;
 
 import ee.ut.math.tvt.salessystem.domain.data.DisplayableItem;
 
 /**
  * Generic table model implementation suitable for extending.
  */
-public abstract class SalesSystemTableModel<T extends DisplayableItem> extends
-        AbstractTableModel {
+public abstract class SalesSystemTableModel<T extends DisplayableItem> extends 
+AbstractSalesSystemTableModel<T> {
 
     private static final long serialVersionUID = 1L;
 
     protected List<T> rows;
-    protected final String[] headers;
 
     public SalesSystemTableModel(final String[] headers) {
-        this.headers = headers;
+    	super(headers);
         rows = new ArrayList<T>();
     }
 
@@ -35,11 +33,6 @@ public abstract class SalesSystemTableModel<T extends DisplayableItem> extends
 
     public int getColumnCount() {
         return headers.length;
-    }
-
-    @Override
-    public String getColumnName(final int columnIndex) {
-        return headers[columnIndex];
     }
 
     public int getRowCount() {
@@ -81,9 +74,4 @@ public abstract class SalesSystemTableModel<T extends DisplayableItem> extends
     public T getRow(int index) {
         return rows.get(index);
     }
-    
-    public List<T> getRows() {
-        return rows;
-    }
-    
 }
