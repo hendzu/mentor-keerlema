@@ -39,7 +39,6 @@ public class SalesSystemModel {
 
         List<StockItem> stockItems = domainController.getAllStockItems();
         warehouseTableModel.populateWithData(stockItems);
-
         List<Client> clients = domainController.getAllClients();
         clientTableModel.populateWithData(clients);
 

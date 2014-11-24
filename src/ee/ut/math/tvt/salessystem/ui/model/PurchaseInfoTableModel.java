@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 /**
  * Purchase history details model.
  */
-public class PurchaseInfoTableModel extends AbstractSalesSystemTableModel<SoldItem> 
+public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> 
 {
 	private static final long serialVersionUID = 1L;
 
@@ -158,38 +158,4 @@ public class PurchaseInfoTableModel extends AbstractSalesSystemTableModel<SoldIt
 		this.sale = sale;
 		fireTableDataChanged();
 	}
-
-	@Override
-	public int getRowCount() {
-		return sale.getSoldItems().size();
-	}
-
-	@Override
-	public Object getValueAt(int rowIndex, int columnIndex) {
-		return getColumnValue(getTableRows().get(rowIndex), columnIndex);
-	}
-
-	@Override
-	//maybe not necessary
-	public SoldItem getItemById(long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	//also maybe not necessary
-	public void clear() {
-		setSale(new Sale());
-	}
-
-	@Override
-	//may be unnecessary
-	public void populateWithData(List<SoldItem> data) {
-		// TODO Auto-generated method stub		
-	}
-
-	@Override
-	//could be unnecessary
-	public void addRow(SoldItem row) {
-	}  
 }

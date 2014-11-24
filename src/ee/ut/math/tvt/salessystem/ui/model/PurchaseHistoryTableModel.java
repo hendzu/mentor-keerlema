@@ -52,4 +52,10 @@ public class PurchaseHistoryTableModel extends SalesSystemTableModel<Sale> {
 
 		return buffer.toString();
 	}
+
+	@Override
+	public List<Sale> getTableRows() {
+		// TODO Auto-generated method stub
+		return rows;
+	}
 }

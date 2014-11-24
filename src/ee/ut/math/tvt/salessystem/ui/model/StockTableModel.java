@@ -97,4 +97,9 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 
 		return buffer.toString();
 	}
+
+	@Override
+	public List<StockItem> getTableRows() {
+		return rows;
+	}
 }
