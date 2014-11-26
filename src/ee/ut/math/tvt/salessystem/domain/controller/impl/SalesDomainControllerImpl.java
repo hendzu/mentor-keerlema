@@ -73,10 +73,11 @@ public class SalesDomainControllerImpl implements SalesDomainController {
         // Begin transaction
         Transaction tx = session.beginTransaction();
      // Reduce quantities of stockItems in warehouse
+        System.out.println(sale.getId());
         for (SoldItem item : sale.getSoldItems()) {
             // Associate with current sale
             item.setSale(sale);
-
+            System.out.println(item.getStockItem().getId());
             StockItem stockItem = getStockItem(item.getStockItem().getId());
             stockItem.setQuantity(stockItem.getQuantity() - item.getQuantity());
             System.out.println(stockItem);

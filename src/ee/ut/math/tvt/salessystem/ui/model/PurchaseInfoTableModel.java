@@ -135,6 +135,10 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem>
 
     }
 
+    @Override public void clear() {
+    	sale.getSoldItems().clear();
+    	super.clear();
+    };
 
     public static PurchaseInfoTableModel getEmptyTable() {
         return new PurchaseInfoTableModel();

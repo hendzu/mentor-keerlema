@@ -34,6 +34,11 @@ public abstract class SalesSystemTableModel<T extends DisplayableItem> extends A
         return headers.length;
     }
 
+    @Override public String getColumnName(final int columnIndex)
+    {
+    	return headers[columnIndex];
+    }
+    
     @Override
 	public int getRowCount() {
     	return getTableRows().size();

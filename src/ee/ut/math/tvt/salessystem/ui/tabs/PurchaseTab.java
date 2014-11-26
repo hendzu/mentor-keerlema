@@ -168,7 +168,6 @@ public class PurchaseTab {
         PayingWindow.show(price, this);
     }
 
-
     public void endPurchaseAfterPaying() {
         log.info("Sale complete");
         try {
@@ -180,6 +179,8 @@ public class PurchaseTab {
             domainController.registerSale(sale);
             endSale();
             model.getCurrentPurchaseTableModel().clear();
+            
+            
         } catch (VerificationFailedException e1) {
             log.error(e1.getMessage());
         }
