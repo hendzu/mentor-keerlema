@@ -142,7 +142,7 @@ public class PurchaseItemPanel extends JPanel {
 
 
     // Fill dialog with data from the "database".
-    public void fillDialogFields() {
+    private void fillDialogFields() {
         //StockItem stockItem = getStockItemByBarcode();
         StockItem stockItem = (StockItem) stockItemSelector.getSelectedItem();
 
@@ -173,7 +173,7 @@ public class PurchaseItemPanel extends JPanel {
     /**
      * Add new item to the cart.
      */
-    public void addItemEventHandler() {
+    private void addItemEventHandler() {
         // add chosen item to the shopping cart.
         StockItem stockItem = getStockItemByBarcode();
         if (stockItem != null) {

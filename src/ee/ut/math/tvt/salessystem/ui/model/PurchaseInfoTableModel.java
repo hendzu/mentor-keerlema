@@ -31,11 +31,6 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem>
 	    this.model = model;
 	}
 	
-	public PurchaseInfoTableModel(SalesSystemModel model, Sale sale)
-	{
-		this(model);
-		this.sale = sale;
-	}
 
 	@Override
 	protected Object getColumnValue(SoldItem item, int columnIndex) {
@@ -75,7 +70,7 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem>
 	}
 
 
-	public SoldItem getForStockItem(long stockItemId) {
+	private SoldItem getForStockItem(long stockItemId) {
 	    for (SoldItem item : sale.getSoldItems()) {
 	        if (item.getStockItem().getId().equals(stockItemId)) {
 	            return item;

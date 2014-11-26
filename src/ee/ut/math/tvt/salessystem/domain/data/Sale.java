@@ -80,10 +80,6 @@ public class Sale implements DisplayableItem {
         this.id = id;
     }
 
-    public void addSoldItem(SoldItem item) {
-        item.setSale(this);
-        soldItems.add(item);
-    }
 
     public double getSum() {
         double sum = 0.0;

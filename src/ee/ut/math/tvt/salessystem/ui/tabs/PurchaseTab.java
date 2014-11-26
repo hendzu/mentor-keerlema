@@ -147,14 +147,14 @@ public class PurchaseTab {
      */
 
     /** Event handler for the <code>new purchase</code> event. */
-    protected void newPurchaseButtonClicked() {
+    private void newPurchaseButtonClicked() {
         log.info("New sale process started");
         domainController.startNewPurchase();
         startNewSale();
     }
 
     /** Event handler for the <code>cancel purchase</code> event. */
-    protected void cancelPurchaseButtonClicked() {
+    private void cancelPurchaseButtonClicked() {
         log.info("Sale cancelled");
         domainController.cancelCurrentPurchase();
         endSale();
@@ -163,7 +163,7 @@ public class PurchaseTab {
     }
 
     /** Event handler for the <code>submit purchase</code> event. */
-    protected void startPayingPurchase() {
+    private void startPayingPurchase() {
         double price = model.getCurrentPurchaseTableModel().getTotalPrice();
         PayingWindow.show(price, this);
     }

@@ -117,7 +117,7 @@ public class StockTab {
     /**
      * Add new item to the stock.
      */
-    public void addStockItemEventHandler() {
+    private void addStockItemEventHandler() {
         JTextField itemName = new JTextField();
         JTextField itemPrice = new JTextField();
         JTextField itemQuantity = new JTextField();

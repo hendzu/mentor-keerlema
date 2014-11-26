@@ -12,7 +12,7 @@ import org.hibernate.cfg.AnnotationConfiguration;
 public class HibernateUtil {
 	private static final Logger log = Logger.getLogger(HibernateUtil.class);
 
-	public static final SessionFactory sessionFactory;
+	private static final SessionFactory sessionFactory;
 
 	static {
 		try {
