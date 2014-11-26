@@ -28,7 +28,8 @@ public class SoldItem implements Cloneable, DisplayableItem {
 
     @Column(nullable = false, length = 50)
     private String name;
-
+    
+    @Column(name="QUANTITY")
     private Integer quantity;
 
     @Column(name = "itemprice")
@@ -49,7 +50,8 @@ public class SoldItem implements Cloneable, DisplayableItem {
         this.quantity = quantity;
     }
 
-    public Long getId() {
+    @Override
+	public Long getId() {
         return id;
     }
 

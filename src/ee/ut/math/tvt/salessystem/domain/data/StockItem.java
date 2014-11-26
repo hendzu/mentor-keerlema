@@ -94,7 +94,8 @@ public class StockItem implements Cloneable, DisplayableItem {
         this.price = price;
     }
 
-    public Long getId() {
+    @Override
+	public Long getId() {
         return id;
     }
 

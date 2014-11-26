@@ -104,7 +104,8 @@ public class PurchaseTab {
     private JButton createNewPurchaseButton() {
         JButton b = new JButton("New purchase");
         b.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+            @Override
+			public void actionPerformed(ActionEvent e) {
                 newPurchaseButtonClicked();
             }
         });
@@ -116,7 +117,8 @@ public class PurchaseTab {
     private JButton createConfirmButton() {
         JButton confirmButton = new JButton("Confirm");
         confirmButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+            @Override
+			public void actionPerformed(ActionEvent e) {
                 startPayingPurchase();
             }
         });
@@ -129,7 +131,8 @@ public class PurchaseTab {
     private JButton createCancelButton() {
         JButton b = new JButton("Cancel");
         b.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+            @Override
+			public void actionPerformed(ActionEvent e) {
                 cancelPurchaseButtonClicked();
             }
         });

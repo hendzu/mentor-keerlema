@@ -29,15 +29,18 @@ public abstract class SalesSystemTableModel<T extends DisplayableItem> extends A
      */
     protected abstract Object getColumnValue(T item, int columnIndex);
 
-    public int getColumnCount() {
+    @Override
+	public int getColumnCount() {
         return headers.length;
     }
 
-    public int getRowCount() {
+    @Override
+	public int getRowCount() {
     	return getTableRows().size();
     }
 
-    public Object getValueAt(final int rowIndex, final int columnIndex) {
+    @Override
+	public Object getValueAt(final int rowIndex, final int columnIndex) {
         return getColumnValue(getTableRows().get(rowIndex), columnIndex);
     }
 

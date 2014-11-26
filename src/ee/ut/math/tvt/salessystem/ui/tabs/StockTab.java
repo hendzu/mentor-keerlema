@@ -3,12 +3,15 @@ package ee.ut.math.tvt.salessystem.ui.tabs;
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -17,7 +20,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 import javax.swing.table.JTableHeader;
+
 import org.apache.log4j.Logger;
 
 public class StockTab {
@@ -71,7 +76,8 @@ public class StockTab {
 
         addItem = new JButton("Add");
         addItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+            @Override
+			public void actionPerformed(ActionEvent e) {
                 addStockItemEventHandler();
             }
         });
@@ -125,7 +131,7 @@ public class StockTab {
 
         JDialog dialog = op.createDialog(null, "Enter new item ...");
         dialog.setDefaultCloseOperation(
-                JDialog.DO_NOTHING_ON_CLOSE);
+                WindowConstants.DO_NOTHING_ON_CLOSE);
         dialog.setVisible(true);
 
         int result = ((Integer)op.getValue()).intValue();
@@ -187,6 +193,11 @@ public class StockTab {
                     JOptionPane.ERROR_MESSAGE
             );
         }
+    }
+    
+    public void refresh(){
+    	 List<StockItem> stockItems = controller.getAllStockItems();
+         model.getWarehouseTableModel().populateWithData(stockItems);
     }
 
 }

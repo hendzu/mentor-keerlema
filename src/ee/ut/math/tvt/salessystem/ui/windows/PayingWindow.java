@@ -50,7 +50,8 @@ public class PayingWindow {
             payingWindow.setAlwaysOnTop(true);
             payingWindow.setResizable(false);
             payingWindow.addWindowListener(new WindowAdapter() {
-                public void windowClosing(WindowEvent e) {
+                @Override
+				public void windowClosing(WindowEvent e) {
                     cancelPaying();
                 }
             });
@@ -104,7 +105,8 @@ public class PayingWindow {
         // Confirmation of the given amount of cash:
         okButton = new JButton("Ok");
         okButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+            @Override
+			public void actionPerformed(ActionEvent e) {
                 double cash = 0.0;
                 try {
                     cash = Double.parseDouble(paidMoneyTextField.getText());
@@ -130,7 +132,8 @@ public class PayingWindow {
         // Buttons and their actions:
         cancelButton = new JButton("Cancel");
         cancelButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+            @Override
+			public void actionPerformed(ActionEvent e) {
                 cancelPaying();
             }
         });        
@@ -142,7 +145,8 @@ public class PayingWindow {
         commitButton = new JButton("Commit");
         commitButton.setEnabled(false);
         commitButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+            @Override
+			public void actionPerformed(ActionEvent e) {
                 parent.endPurchaseAfterPaying();
                 payingWindow.setVisible(false);
             }

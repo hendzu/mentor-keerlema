@@ -7,7 +7,6 @@ import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 import ee.ut.math.tvt.salessystem.util.HibernateUtil;
-import java.util.Date;
 import java.util.List;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
@@ -24,7 +23,8 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 
     private Session session = HibernateUtil.currentSession();
 
-    @SuppressWarnings("unchecked")
+    @Override
+	@SuppressWarnings("unchecked")
     public List<StockItem> getAllStockItems() {
         List<StockItem> result =
             session
@@ -36,7 +36,8 @@ public class SalesDomainControllerImpl implements SalesDomainController {
         return result;
     }
 
-    @SuppressWarnings("unchecked")
+    @Override
+	@SuppressWarnings("unchecked")
     public List<Sale> getAllSales() {
         List<Sale> result = session.createQuery("from Sale").list();
         log.info(result.size() + " Sales loaded from disk");
@@ -45,7 +46,8 @@ public class SalesDomainControllerImpl implements SalesDomainController {
     }
 
 
-    @SuppressWarnings("unchecked")
+    @Override
+	@SuppressWarnings("unchecked")
     public List<Client> getAllClients() {
         List<Client> clients =
             session.createQuery("from Client").list();
@@ -55,7 +57,8 @@ public class SalesDomainControllerImpl implements SalesDomainController {
         return clients;
     }
 
-    public Client getClient(long id) {
+    @Override
+	public Client getClient(long id) {
         return (Client) session.get(Client.class, id);
     }
 
@@ -64,11 +67,11 @@ public class SalesDomainControllerImpl implements SalesDomainController {
         return (StockItem) session.get(StockItem.class, id);
     }
 
-    public void registerSale(Sale sale)
+    @Override
+	public void registerSale(Sale sale)
     {
         // Begin transaction
         Transaction tx = session.beginTransaction();
-        
      // Reduce quantities of stockItems in warehouse
         for (SoldItem item : sale.getSoldItems()) {
             // Associate with current sale
@@ -76,6 +79,7 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 
             StockItem stockItem = getStockItem(item.getStockItem().getId());
             stockItem.setQuantity(stockItem.getQuantity() - item.getQuantity());
+            System.out.println(stockItem);
             session.save(stockItem);
         }
         
@@ -87,7 +91,8 @@ public class SalesDomainControllerImpl implements SalesDomainController {
     }
 
 
-    public void createStockItem(StockItem stockItem) {
+    @Override
+	public void createStockItem(StockItem stockItem) {
         // Begin transaction
         Transaction tx = session.beginTransaction();
         session.save(stockItem);
@@ -97,19 +102,22 @@ public class SalesDomainControllerImpl implements SalesDomainController {
     }
 
 
-    public void cancelCurrentPurchase() {
+    @Override
+	public void cancelCurrentPurchase() {
         // XXX - Cancel current purchase
         log.info("Current purchase canceled");
     }
 
-    public void startNewPurchase() {
+    @Override
+	public void startNewPurchase() {
         // XXX - Start new purchase
         log.info("New purchase started");
     }
 
 
 
-    public void setModel(SalesSystemModel model) {
+    @Override
+	public void setModel(SalesSystemModel model) {
         this.model = model;
     }
 

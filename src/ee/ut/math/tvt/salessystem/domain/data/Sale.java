@@ -2,11 +2,10 @@ package ee.ut.math.tvt.salessystem.domain.data;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -29,6 +28,8 @@ public class Sale implements DisplayableItem {
 
     @OneToMany(targetEntity = SoldItem.class, mappedBy = "sale", cascade = CascadeType.ALL)
     private List<SoldItem> soldItems;
+    
+    @Column(name="SELLINGTIME")
     private Date sellingTime;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -70,7 +71,8 @@ public class Sale implements DisplayableItem {
         this.soldItems = soldItems;
     }
 
-    public Long getId() {
+    @Override
+	public Long getId() {
         return id;
     }
 

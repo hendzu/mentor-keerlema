@@ -95,7 +95,8 @@ public class PurchaseItemPanel extends JPanel {
 
         // Fill the dialog fields if the selected item in the JComboBox changes
         stockItemSelector.addItemListener(new ItemListener() {
-            public void itemStateChanged(ItemEvent e) {
+            @Override
+			public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     fillDialogFields();
                 }
@@ -127,7 +128,8 @@ public class PurchaseItemPanel extends JPanel {
         // Create and add the button
         addItemButton = new JButton("Add to cart");
         addItemButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+            @Override
+			public void actionPerformed(ActionEvent e) {
                 addItemEventHandler();
             }
         });

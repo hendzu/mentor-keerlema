@@ -1,11 +1,15 @@
 package ee.ut.math.tvt.salessystem.ui.tabs;
 
+import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.domain.data.Sale;
 import ee.ut.math.tvt.salessystem.ui.model.PurchaseInfoTableModel;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
+
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.util.List;
+
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -22,11 +26,18 @@ import javax.swing.event.ListSelectionListener;
 public class HistoryTab {
 
     private SalesSystemModel model;
+    private final SalesDomainController controller;
 
     private PurchaseInfoTableModel historyDetailsTableModel;
 
-    public HistoryTab(SalesSystemModel model) {
+    public HistoryTab(SalesSystemModel model, SalesDomainController controller) {
         this.model = model;
+        this.controller = controller;
+    }
+    
+    public void refresh(){
+        List<Sale> sales = controller.getAllSales();
+        model.getPurchaseHistoryTableModel().populateWithData(sales);
     }
 
     /**
@@ -56,7 +67,8 @@ public class HistoryTab {
         ListSelectionModel rowSM = table.getSelectionModel();
 
         rowSM.addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent e) {
+            @Override
+			public void valueChanged(ListSelectionEvent e) {
 
                 // Ignore extra messages.
                 if (e.getValueIsAdjusting()) return;
