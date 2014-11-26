@@ -14,6 +14,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -171,6 +172,8 @@ public class PurchaseTab {
 
             log.debug("Contents of the current basket:\n"
                     + model.getCurrentPurchaseTableModel());
+            sale.setSoldItems(model.getCurrentPurchaseTableModel().getTableRows());
+            sale.setSellingTime(new Date());
             domainController.registerSale(sale);
             endSale();
             model.getCurrentPurchaseTableModel().clear();
