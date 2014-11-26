@@ -37,10 +37,12 @@ public class Sale implements DisplayableItem {
 
     /** Empty constructors are used by hibernate */
     public Sale() {
+    	this.soldItems = new ArrayList<SoldItem>();
     }
 
-    public Sale(List<SoldItem> goods) {
-        this.soldItems = new ArrayList<SoldItem>(goods);
+    public Sale(Client client) {
+        this.soldItems = new ArrayList<SoldItem>();
+        this.client = client;
         this.sellingTime = new Date();
     }
 
