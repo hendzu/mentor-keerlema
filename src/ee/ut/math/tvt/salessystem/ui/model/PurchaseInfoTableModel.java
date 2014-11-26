@@ -13,8 +13,7 @@ import org.apache.log4j.Logger;
 /**
  * Purchase history details model.
  */
-public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> 
-{
+public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
 	private static final long serialVersionUID = 1L;
 
 	private static final Logger log = Logger.getLogger(PurchaseInfoTableModel.class);
@@ -26,15 +25,14 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem>
         super(new String[] { "Id", "Name", "Price", "Quantity", "Sum"});
     }
 
-	public PurchaseInfoTableModel(SalesSystemModel model) {
+    public PurchaseInfoTableModel(SalesSystemModel model) {
 	    this();
 	    this.model = model;
-	}
-	
-	public PurchaseInfoTableModel(SalesSystemModel model, Sale sale)
-	{
-		this(model);
-		this.sale = sale;
+    }
+    
+	public PurchaseInfoTableModel(SalesSystemModel model, Sale sale) {
+	    this(model);
+	    this.sale = sale;
 	}
 
 	@Override
@@ -62,7 +60,7 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem>
 			buffer.append(headers[i] + "\t");
 		buffer.append("\n");
 
-		for (final SoldItem item : sale.getSoldItems()) {
+		for (final SoldItem item : getTableRows()) {
 			buffer.append(item.getId() + "\t");
 			buffer.append(item.getName() + "\t");
 			buffer.append(item.getPrice() + "\t");
@@ -76,7 +74,7 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem>
 
 
 	public SoldItem getForStockItem(long stockItemId) {
-	    for (SoldItem item : sale.getSoldItems()) {
+	    for (SoldItem item : getTableRows()) {
 	        if (item.getStockItem().getId().equals(stockItemId)) {
 	            return item;
 	        }
@@ -104,7 +102,7 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem>
 
         } else {
             validateQuantityInStock(soldItem.getStockItem(), soldItem.getQuantity());
-            sale.getSoldItems().add(soldItem);
+            getTableRows().add(soldItem);
             log.debug("Added " + soldItem.getName()
                     + " quantity of " + soldItem.getQuantity());
         }
@@ -117,13 +115,11 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem>
      */
     public double getTotalPrice() {
         double price = 0.0;
-        for (SoldItem item : sale.getSoldItems()) {
+        for (SoldItem item : getTableRows()) {
             price += item.getSum();
         }
         return price;
     }
-
-
 
     private void validateQuantityInStock(StockItem item, int quantity)
         throws SalesSystemException {
@@ -134,8 +130,7 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem>
         }
 
     }
-
-
+    
     public static PurchaseInfoTableModel getEmptyTable() {
         return new PurchaseInfoTableModel();
     }
@@ -144,18 +139,14 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem>
      * Replace the current contents of the table with the SoldItems of the given Sale.
      * (Used by the history details table in the HistoryTab).
      */
-    //public void showSale(Sale sale) {
-      //  this.rows = new ArrayList<SoldItem>(sale.getSoldItems());
-        //fireTableDataChanged();
-    //}
+    public void setSale(Sale sale) {
+        this.sale = sale;
+        fireTableDataChanged();
+    }
 
 	@Override
 	public List<SoldItem> getTableRows() {
-		return new ArrayList<SoldItem>(sale.getSoldItems());
+		return sale.getSoldItems();
 	}
 
-	public void setSale(Sale sale) {
-		this.sale = sale;
-		fireTableDataChanged();
-	}
 }
